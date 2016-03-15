@@ -7,8 +7,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<header class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <%= link_to "Palladium", '/', class: 'navbar-brand text-uppercase' %>
+    </div>
+    <div class="nav navbar-nav navbar-right">
+      <%= link_to "Sign In", '#', class: "btn btn-primary navbar-btn" %>
+      <%= link_to "Sign Up", '#', class: "btn btn-success navbar-btn" %>
+    </div>
+  </div>
+</header>
 
 <%= yield %>
-
 </body>
 </html>

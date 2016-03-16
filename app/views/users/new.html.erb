@@ -1,5 +1,34 @@
-<h1>New User</h1>
+<div class="center-block small-form">
+    <%= form_for(@user) do |f| %>
+      <div class="form-group">
+        <%= f.label :email, 'Email address' %>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', users_path %>
+        <%= f.text_field :email, class: "form-control", placeholder: 'Email' %>
+        <% if @user.errors.full_messages_for(:email).any? %>
+            <% @user.errors.full_messages_for(:email).each do |message| %>
+                <p class="text-danger"><small><%= message %></small></p>
+            <% end %>
+        <% end %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password, 'Password' %>
+        <%= f.password_field  :password, class: "form-control", placeholder: 'Password'  %>
+        <% if @user.errors.full_messages_for(:password).any? %>
+            <% @user.errors.full_messages_for(:password).each do |message| %>
+                <p class="text-danger"><small><%= message %></small></p>
+            <% end %>
+        <% end %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation, 'Confirm password' %>
+        <%= f.password_field  :password_confirmation, class: "form-control", placeholder: 'Confirm password'  %>
+        <% if @user.errors.full_messages_for(:password_confirmation).any? %>
+            <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
+                <p class="text-danger"><small><%= message %></small></p>
+            <% end %>
+        <% end %>
+      </div>
+      <%= f.submit "Sign up", class: "btn btn-default", id: 'signup' %>
+      <p><small>Already registered? <%= link_to 'Sign in!', signin_path, id: 'signin' %></small></p>
+    <% end %>
+</div>

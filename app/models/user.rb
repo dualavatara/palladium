@@ -1,8 +1,16 @@
 class User
+  include ActiveModel::SecurePassword
   include Mongoid::Document
-  field :name, type: String
-  field :login, type: String
-  field :passwd, type: String
-  validates :login, email: {message: "must be a valid e-mail address."}
-  validates :passwd, presence: true
+  include Mongoid::Timestamps
+
+  field :email, type: String
+  field :password_digest, type: String
+
+  index({ email: 1 }, { unique: true})
+
+  validates :email, email: true, uniqueness: { case_sensitive: false }
+  validates :password, length: { minimum: 6 }
+
+  before_save { self.email = email.downcase }
+  has_secure_password
 end

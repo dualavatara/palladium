@@ -9,12 +9,12 @@ RSpec.describe "StaticPages", type: :request do
 
     it "should have 'Sign In' link" do
       visit '/'
-      expect(page).to have_link('Sign In')
+      expect(page).to have_link('Sign In', href: '/signin')
     end
 
     it "should have 'Sign Up' link" do
       visit '/'
-      expect(page).to have_link('Sign Up')
+      expect(page).to have_link('Sign Up', href: '/signup')
     end
   end
 end

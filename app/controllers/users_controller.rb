@@ -61,6 +61,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def authenticate
+    redirect_to(root_path)
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
@@ -69,6 +73,6 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:name, :login, :passwd)
+    params.require(:user).permit(:email, :password, :password_confirmation)
   end
 end

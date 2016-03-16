@@ -7,6 +7,7 @@ gem 'rails', '4.2.5.1'
 # MongoDB
 gem 'mongoid', '~> 5.1.0'
 gem 'bson_ext'
+gem 'mongoid_rails_migrations'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
@@ -51,6 +52,7 @@ end
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
+  gem 'database_cleaner', :git => 'https://github.com/DatabaseCleaner/database_cleaner.git'
 end
 
 

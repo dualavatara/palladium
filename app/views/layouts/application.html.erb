@@ -2,9 +2,13 @@
 <html>
 <head>
   <title>Palladium</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <header class="navbar navbar-default navbar-static-top">
@@ -13,12 +17,16 @@
       <%= link_to "Palladium", '/', class: 'navbar-brand text-uppercase' %>
     </div>
     <div class="nav navbar-nav navbar-right">
-      <%= link_to "Sign In", '#', class: "btn btn-primary navbar-btn" %>
-      <%= link_to "Sign Up", '#', class: "btn btn-success navbar-btn" %>
+      <%= link_to "Sign In", signin_path, class: "btn btn-primary navbar-btn" %>
+      <%= link_to "Sign Up", signup_path, class: "btn btn-success navbar-btn" %>
     </div>
   </div>
 </header>
+<div class="container">
+  <div class="row">
+    <%= yield %>
+  </div>
+</div>
 
-<%= yield %>
 </body>
 </html>

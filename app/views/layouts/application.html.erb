@@ -17,8 +17,9 @@
       <%= link_to "Palladium", '/', class: 'navbar-brand text-uppercase' %>
     </div>
     <div class="nav navbar-nav navbar-right">
-      <%= link_to "Sign In", signin_path, class: "btn btn-primary navbar-btn" %>
-      <%= link_to "Sign Up", signup_path, class: "btn btn-success navbar-btn" %>
+      <%= link_to "Sign In", signin_path, class: "btn btn-primary navbar-btn", id: 'signin_btn' unless signed_in?%>
+      <%= link_to "Sign Up", signup_path, class: "btn btn-success navbar-btn", id: 'signup_btn' unless signed_in? %>
+      <%= link_to "Sign Out", signout_path, class: "btn btn-success navbar-btn", id: 'signout_btn' if signed_in? %>
     </div>
   </div>
 </header>
@@ -27,6 +28,7 @@
     <%= yield %>
   </div>
 </div>
+<%= debug params %>
 
 </body>
 </html>

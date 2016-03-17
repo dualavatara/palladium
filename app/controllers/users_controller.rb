@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    redirect_to root_path, status: :found if signed_in?
     @user = User.new
   end
 
@@ -28,7 +29,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        self.current_user = @user
+        format.html { redirect_to root_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -62,7 +64,34 @@ class UsersController < ApplicationController
   end
 
   def authenticate
-    redirect_to(root_path)
+    @errors = ActiveModel::Errors.new(self)
+
+    redirect_to root_path, status: :found if signed_in?
+
+    if params.has_key?(:user) && params[:user].has_key?(:email)
+      begin
+        user = User.find_by(email: params[:user][:email].downcase)
+
+        raise 'user authentication failed' unless user.authenticate(params[:user][:password])
+          # Sign the user in and redirect to the user's show page.
+        self.current_user = user
+        redirect_to root_path, status: :found, notice: "Authentication successful."
+
+      rescue
+        # Create an error message and re-render the signin form.
+        @errors.add(:email, 'or password is incorrect.')
+      end
+    end
+  end
+
+  def signout
+    clear_current_user
+    redirect_to root_path
+  end
+
+  def self.human_attribute_name(key, opts)
+    names = {email: 'Email'}
+    names[key]
   end
 
   private

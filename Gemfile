@@ -53,6 +53,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'capybara'
   gem 'database_cleaner', :git => 'https://github.com/DatabaseCleaner/database_cleaner.git'
+  gem "show_me_the_cookies"
 end
 
 

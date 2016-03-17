@@ -3,7 +3,8 @@ Rails.application.routes.draw do
   get 'static_pages/help'
 
   match 'signup', to: 'users#new', via: :get
-  match 'signin', to: 'users#authenticate', via: :get
+  match 'signin', to: 'users#authenticate', via: [:get, :post]
+  match 'signout', to: 'users#signout', via: [:get]
 
   resources :users
   resources :requirements

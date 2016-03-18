@@ -5,20 +5,26 @@
         <%= f.text_field :email, class: "form-control", placeholder: 'Email' %>
         <% if @auth.errors.full_messages_for(:email).any? %>
             <% @auth.errors.full_messages_for(:email).each do |message| %>
-                <p class="text-danger"><small><%= message %></small></p>
+                <p class="text-danger">
+                  <small><%= message %></small>
+                </p>
             <% end %>
         <% end %>
       </div>
       <div class="form-group">
         <%= f.label :password, 'Password' %>
-        <%= f.password_field  :password, class: "form-control", placeholder: 'Password', value: ''  %>
+        <%= f.password_field :password, class: "form-control", placeholder: 'Password', value: '' %>
         <% if @auth.errors.full_messages_for(:password).any? %>
             <% @auth.errors.full_messages_for(:password).each do |message| %>
-                <p class="text-danger"><small><%= message %></small></p>
+                <p class="text-danger">
+                  <small><%= message %></small>
+                </p>
             <% end %>
         <% end %>
       </div>
       <%= f.submit "Sign in", class: "btn btn-default", id: 'signin' %>
-      <p><small>New user? <%= link_to 'Sign up!', signup_path, id: 'signup' %></small></p>
+      <p>
+        <small>New user? <%= link_to 'Sign up!', signup_path, id: 'signup' %></small>
+      </p>
   <% end %>
 </div>

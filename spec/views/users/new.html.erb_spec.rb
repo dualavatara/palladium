@@ -5,7 +5,7 @@ RSpec.describe "users/new", type: :view do
     assign(:user, User.new)
     render
   end
-  
+
   it "should have field 'email' and label for it" do
     expect(rendered).to have_field('user_email')
     expect(rendered).to have_css('label[for=user_email]')

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   match 'signup', to: 'users#new', via: :get
   match 'signin', to: 'users#authenticate', via: [:get, :post]
   match 'signout', to: 'users#signout', via: [:get]
+  match 'profile', to: 'users#show', via: :get
 
   resources :users
   resources :requirements

@@ -1,11 +1,18 @@
 Rails.application.routes.draw do
+  get 'authentications/new'
+
+  get 'authentications/create'
+
+  get 'authentications/destroy'
+
   get 'static_pages/home'
   get 'static_pages/help'
 
   match 'signup', to: 'users#new', via: :get
-  match 'signin', to: 'users#authenticate', via: [:get, :post]
-  match 'signout', to: 'users#signout', via: [:get]
+  match 'signin', to: 'authentications#new', via: [:get, :post]
+  match 'signout', to: 'authentications#destroy', via: [:get]
 
+  resources :authentications, only: [:new, :create, :destroy]
   resources :users
   resources :requirements
 

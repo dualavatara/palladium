@@ -70,4 +70,68 @@ RSpec.describe "Users", type: :request do
       expect(page).to have_current_path('/signin')
     end
   end
+
+  describe 'user profile' do
+    before do
+      @user = FactoryGirl.create(:user)
+      visit '/signin'
+      fill_in "authentication_email", with: "test@test.com"
+      fill_in "authentication_password", with: "foobar"
+      click_button 'signin'
+      visit '/profile'
+    end
+
+    it 'should load profile form on edit link' do
+      click_link 'Edit'
+      expect(page).to have_field('Name')
+      expect(page).to have_field('Initials')
+    end
+
+    it 'should change name and initials on profile form submit' do
+      click_link 'Edit'
+      fill_in "user_name", with: "John Doe"
+      fill_in "user_initials", with: "JD"
+      click_button 'Edit'
+
+      usr = User.find(@user._id)
+      expect(usr.name).to eq("John Doe")
+      expect(usr.initials).to eq("JD")
+    end
+
+    it 'should show error on invalid name submit' do
+      click_link 'Edit'
+      fill_in "user_name", with: ""
+      click_button 'Edit'
+      expect(page).to have_css(".text-danger")
+    end
+
+    it 'should autocalc initials whem empty initials submitted' do
+      click_link 'Edit'
+      fill_in "user_name", with: "John Doe"
+      fill_in "user_initials", with: ""
+      click_button 'Edit'
+      usr = User.find(@user._id)
+      expect(usr.name).to eq("John Doe")
+      expect(usr.initials).to eq("JD")
+    end
+
+    it 'should change password' do
+      fill_in 'user_password', with: 'testpass'
+      fill_in 'user_password_confirmation', with: 'testpass'
+      click_button 'Set password'
+      visit '/signout'
+      visit '/signin'
+      fill_in "authentication_email", with: "test@test.com"
+      fill_in "authentication_password", with: "testpass"
+      click_button 'signin'
+      expect(page).to have_current_path(root_path)
+    end
+
+    it 'should show error on invalid password submit' do
+      fill_in 'user_password', with: 'testpass'
+      fill_in 'user_password_confirmation', with: 'testpass2'
+      click_button 'Set password'
+      expect(page).to have_css(".text-danger")
+    end
+  end
 end

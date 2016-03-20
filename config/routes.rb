@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   get 'static_pages/home'
   get 'static_pages/help'
   get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
+  patch 'profile', to: 'users#update_profile', as: 'update_profile'
+  patch 'password', to: 'users#update_password', as: 'update_password'
 
   match 'signup', to: 'users#new', via: :get
   match 'signin', to: 'authentications#new', via: [:get, :post]

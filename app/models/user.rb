@@ -27,7 +27,7 @@ class User
   has_secure_password
 
   def validate_password?
-    self.new_record? || (self.password && self.password.any?)
+    self.new_record? || !self.password.blank?
   end
 
   private

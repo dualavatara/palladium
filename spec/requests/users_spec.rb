@@ -22,6 +22,7 @@ RSpec.describe "Users", type: :request do
       describe "with valid information" do
         before do
           fill_in "user_email", with: "user@example.com"
+          fill_in "user_name", with: "John Doe"
           fill_in "user_password", with: "foobar"
           fill_in "user_password_confirmation", with: "foobar"
         end
@@ -63,4 +64,10 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  describe 'unauthenticated user' do
+    it 'should see signin page on /profile' do
+      visit '/profile'
+      expect(page).to have_current_path('/signin')
+    end
+  end
 end

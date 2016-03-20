@@ -1,0 +1,13 @@
+<div class="panel-body" id="myprofile">
+  <%= form_for(@user, remote: true) do |f| %>
+      <div class="form-group">
+        <%= f.label :name, 'Name' %>
+        <%= f.text_field :name, class: "form-control", placeholder: 'Name' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :initials, 'Initials' %>
+        <%= f.text_field :initials, class: "form-control", placeholder: 'Initials' %>
+      </div>
+      <%= f.submit "Edit", class: "btn btn-default", id: 'edit_myprofile' %>
+  <% end %>
+</div>

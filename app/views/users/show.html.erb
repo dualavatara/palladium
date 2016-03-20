@@ -1,0 +1,15 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div>My profile</div>
+    <div>
+      <%= link_to "Edit", edit_profile_path, remote: true %>
+    </div>
+  </div>
+  <%= render 'show_profile' %>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div>Password</div>
+  </div>
+  <%= render 'show_password' %>
+</div>

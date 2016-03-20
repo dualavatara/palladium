@@ -10,11 +10,18 @@ RSpec.describe User, type: :model do
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:name) }
+  it { should respond_to(:initials) }
 
   it { should be_valid }
 
   describe "when email is not present" do
     before { @user.email = " " }
+    it { should_not be_valid }
+  end
+
+  describe "when name is not present" do
+    before { @user.name = " " }
     it { should_not be_valid }
   end
 
@@ -80,6 +87,34 @@ RSpec.describe User, type: :model do
       specify do
         expect(user_for_invalid_password).to be(false)
       end
+    end
+  end
+
+  describe 'when initials are present' do
+    before do
+      @user.initials = 'kz'
+      @user.save
+    end
+
+    let(:initials) { @user.initials }
+
+    it 'should be uppercase' do
+      expect(initials).to eq('KZ')
+    end
+  end
+
+  describe 'when initials are not present' do
+    before do
+      @user.name = 'John doe'
+      @user.initials = ''
+      @user.save
+      @user = User.find(@user._id)
+    end
+
+    let(:initials) { @user.initials }
+
+    it 'should generate them from name' do
+      expect(initials).to eq('JD')
     end
   end
 end

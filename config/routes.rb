@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
   get 'static_pages/home'
   get 'static_pages/help'
+  get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
 
   match 'signup', to: 'users#new', via: :get
   match 'signin', to: 'authentications#new', via: [:get, :post]
   match 'signout', to: 'authentications#destroy', via: [:get]
+  match 'profile', to: 'users#show', via: :get
 
   resources :authentications, only: [:new, :create, :destroy]
   resources :users

@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = current_user if signed_in?
+    @user = current_user
   end
 
   # GET /users/new
@@ -21,6 +21,23 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  # GET /profile/edit
+  def edit_profile
+    respond_to do |format|
+      if (signed_in?)
+        if @user.update(user_params)
+          #show profile
+          format.js { render :edit_profile }
+        else
+          #show form
+          format.js { render :show_profile }
+        end
+      else
+        # TODO: redirect to signin for html, return error for json and js
+      end
+    end
   end
 
   # POST /users
@@ -36,6 +53,7 @@ class UsersController < ApplicationController
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+
       end
     end
   end
@@ -67,11 +85,15 @@ class UsersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.find(params[:id])
+    @user = if params[:id] then
+              User.find(params[:id])
+            else
+              current_user
+            end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 end

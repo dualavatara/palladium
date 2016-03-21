@@ -1,8 +1,10 @@
 <div class="panel-body" id="profile">
   <div class="form-group">
+    <%= label_tag :name, 'Name' %>
     <p class="form-control-static" id="name"><%= @user.name || 'Edit name' %></p>
   </div>
   <div class="form-group">
+    <%= label_tag :initials, 'Initials' %>
     <p class="form-control-static" id="initials"><%= @user.initials %></p>
   </div>
 </div>

@@ -8,6 +8,8 @@ class User
   field :name, type: String
   field :initials, type: String
 
+  has_and_belongs_to_many :roles
+
   index({ email: 1 }, { unique: true})
 
   validates :email, email: true, uniqueness: { case_sensitive: false }

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :roles
+  resources :companies
   get 'static_pages/home'
   get 'static_pages/help'
   get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'

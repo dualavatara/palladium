@@ -117,4 +117,16 @@ RSpec.describe User, type: :model do
       expect(initials).to eq('JD')
     end
   end
+
+  describe 'with roles' do
+    before do
+      @company = FactoryGirl.create(:company, role_count: 5)
+      @user = FactoryGirl.create(:user, roles: [@company.roles.where(name: 'admin')])
+    end
+
+    it 'should have at minimum admin role' do
+      expect(@user.roles.length).to eq(1)
+      expect(@user.roles.where(name: 'admin').first).to be_truthy
+    end
+  end
 end

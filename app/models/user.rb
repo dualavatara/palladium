@@ -32,6 +32,14 @@ class User
     self.new_record? || !self.password.blank?
   end
 
+  def companies
+    Company.find(self.roles.pluck(:company_id))
+  end
+
+  def rolenames_for(company)
+    self.roles.where(company: company).pluck(:name)
+  end
+
   private
   def make_initials(name)
     names = name.split

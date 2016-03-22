@@ -1,0 +1,39 @@
+<div class="panel panel-default" id="companies_panel">
+  <div class="panel-heading">
+    <div class="pull-left">Companies</div>
+    <div class="text-right">
+      <%= link_to 'Add', new_company_path %>
+    </div>
+  </div>
+  <div class="panel-body" id="profile">
+    <p>This is list of companies you have role in. You can edit company`s profile if you have admin role in it. You also can create a company via 'Add' link.  </p>
+  </div>
+  <% if @companies.any? %>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Roles</th>
+      <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%
+      @companies.each do |company|
+        %>
+        <tr>
+          <td><%= company.name %></td>
+          <td><%=
+          @user.rolenames_for(company).join(", ")
+          %></td>
+          <td>&nbsp;</td>
+        </tr>
+    <%
+      end
+    %>
+
+    </tbody>
+  </table>
+      <% end %>
+</div>

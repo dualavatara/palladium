@@ -16,7 +16,7 @@ RSpec.describe Company, type: :model do
   end
 
   it 'should have admin role' do
-    expect(@company.roles.where(name: 'admin').first).to be_truthy
+    expect(@company.roles.pluck(:admin)).to include(true)
   end
 
 end

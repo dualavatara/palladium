@@ -1,7 +1,9 @@
 require 'rails_helper'
-require 'show_me_the_cookies'
+require 'support/users'
 
 RSpec.describe "Users", type: :request do
+
+  include UsersRspecHelpers
 
   subject { page }
 
@@ -45,10 +47,7 @@ RSpec.describe "Users", type: :request do
 
       describe "for authenticated users" do
         before do
-          visit '/signin'
-          fill_in "authentication_email", with: "test@test.com"
-          fill_in "authentication_password", with: "foobar"
-          click_button 'signin'
+          user_signin
           visit '/signup'
         end
 
@@ -73,11 +72,7 @@ RSpec.describe "Users", type: :request do
 
   describe 'user profile' do
     before do
-      @user = FactoryGirl.create(:user)
-      visit '/signin'
-      fill_in "authentication_email", with: "test@test.com"
-      fill_in "authentication_password", with: "foobar"
-      click_button 'signin'
+      user_create_signin
       visit '/profile'
     end
 
@@ -120,10 +115,7 @@ RSpec.describe "Users", type: :request do
       fill_in 'user_password_confirmation', with: 'testpass'
       click_button 'Set password'
       visit '/signout'
-      visit '/signin'
-      fill_in "authentication_email", with: "test@test.com"
-      fill_in "authentication_password", with: "testpass"
-      click_button 'signin'
+      user_signin(password: 'testpass')
       expect(page).to have_current_path(root_path)
     end
 

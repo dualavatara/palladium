@@ -32,5 +32,8 @@ RSpec.describe "layouts/application", type: :view do
     it 'should have /profile link in dropdown' do
       expect(rendered).to have_css('.user_menu .dropdown-menu a[href="/profile"]')
     end
+    it 'should have companies link in dropdown' do
+      expect(rendered).to have_css('.user_menu .dropdown-menu a[href="/companies"]')
+    end
   end
 end

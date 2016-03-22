@@ -120,13 +120,38 @@ RSpec.describe User, type: :model do
 
   describe 'with roles' do
     before do
-      @company = FactoryGirl.create(:company, role_count: 5)
-      @user = FactoryGirl.create(:user, roles: [@company.roles.where(name: 'admin')])
+      @companyA = FactoryGirl.create(:company, role_count: 5) #company where user have other role
+      @companyB = FactoryGirl.create(:company, role_count: 0) #company where user have no roles
+      @companyC = FactoryGirl.create(:company, role_count: 3) #company where user have admin role
+      @roleInA = @companyA.roles[2]
+      @roleInC = @companyC.roles.first
+      @user = FactoryGirl.create(:user,
+                                 roles: [
+                                     @roleInA,
+                                     @roleInC
+                                 ])
     end
 
-    it 'should have at minimum admin role' do
-      expect(@user.roles.length).to eq(1)
-      expect(@user.roles.where(name: 'admin').first).to be_truthy
+    it 'should have roles in company' do
+      expect(@user.roles.length).to eq(2)
+      expect(@user.roles).to include(@roleInA)
+      expect(@user.roles).to include(@roleInC)
+    end
+
+    it {should respond_to(:companies)}
+
+    it 'shoud have correct company list' do
+      expect(@user.companies.length).to eq(2)
+      expect(@user.companies).to include(@companyA)
+      expect(@user.companies).not_to include(@companyB)
+      expect(@user.companies).to include(@companyC)
+    end
+
+    it {should respond_to(:rolenames_for)}
+
+    it 'should return correct roles list for company' do
+      expect(@user.rolenames_for(@companyA).first).to eq(@companyA.roles[2].name)
+      expect(@user.rolenames_for(@companyC).first).to eq(@companyC.roles[0].name)
     end
   end
 end

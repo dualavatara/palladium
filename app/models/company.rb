@@ -10,7 +10,7 @@ class Company
 
   after_save do
     if !has_admin?
-      self.roles.create(name: 'admin')
+      self.roles.create(name: 'admin', admin: true)
     end
   end
 

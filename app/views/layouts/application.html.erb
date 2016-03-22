@@ -47,7 +47,7 @@
     <%= yield %>
   </div>
 </div>
-<%= debug params %>
+<%= debug params unless Rails.env.production? %>
 
 </body>
 </html>

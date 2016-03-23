@@ -15,8 +15,39 @@ RSpec.describe Company, type: :model do
     expect(@company.roles.length).to eq(4)
   end
 
-  it 'should have admin role' do
+  it 'should have admin role on creation' do
     expect(@company.roles.pluck(:admin)).to include(true)
   end
 
+  describe 'company properties' do
+    it 'should have non empty name field' do
+      @company.name = ''
+      expect(@company).not_to be_valid
+    end
+    it 'should have significant name field' do
+      @company.name = '   '
+      expect(@company).not_to be_valid
+    end
+
+    it 'can have empty email field' do
+      @company.email = ''
+      expect(@company).to be_valid
+    end
+    it 'can have empty web field' do
+      @company.web = ''
+      expect(@company).to be_valid
+    end
+    it 'should have correct email field if present' do
+      @company.email = 'some#address,fff'
+      expect(@company).not_to be_valid
+    end
+
+    it 'should have correct web field' do
+      urls = ['some.adress.com/', 'http://', 'http://some']
+      urls.each do |url|
+        @company.email = url
+        expect(@company).not_to be_valid
+      end
+    end
+  end
 end

@@ -12,7 +12,6 @@
   <table class="table">
     <thead>
     <tr>
-      <th>#</th>
       <th>Name</th>
       <th>Roles</th>
       <th>&nbsp;</th>
@@ -23,7 +22,7 @@
       @companies.each do |company|
         %>
         <tr>
-          <td><%= company.name %></td>
+          <td><a href="<%= company.web %>" target="blank"><%= company.name %></a></td>
           <td><%=
           @user.rolenames_for(company).join(", ")
           %></td>

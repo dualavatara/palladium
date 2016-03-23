@@ -2,7 +2,7 @@
   <%= form_for(@auth) do |f| %>
       <div class="form-group">
         <%= f.label :email, 'Email address' %>
-        <%= f.text_field :email, class: "form-control", placeholder: 'Email' %>
+        <%= f.text_field :email, class: "form-control", placeholder: 'some@example.com' %>
         <% if @auth.errors.full_messages_for(:email).any? %>
             <% @auth.errors.full_messages_for(:email).each do |message| %>
                 <p class="text-danger">

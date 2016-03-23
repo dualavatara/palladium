@@ -30,6 +30,10 @@ RSpec.describe "companies/index.html.erb", type: :view do
     expect(rendered).to have_css('table.table td', text: 'Company C')
   end
 
+  it 'should have link on company name' do
+    expect(rendered).to have_link('Company A', href:'http://www.somethinggmbh.com')
+  end
+
   it 'should have proper Add link' do
     expect(rendered).to have_link('Add', href: '/companies/new')
   end

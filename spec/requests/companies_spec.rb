@@ -41,4 +41,39 @@ RSpec.describe "Companies", type: :request do
       end
     end
   end
+
+  describe 'new company' do
+    before { visit '/companies/new' }
+    it 'should have new_company form' do
+      expect(page).to have_css("#new_company")
+    end
+
+    describe 'with valid company data' do
+      before do
+        fill_in 'company_name', with: 'My company Inc.'
+        fill_in 'company_email', with: 'info@myconpany.com'
+        fill_in 'company_web', with: 'http://www.myconpany.com'
+        click_button 'Add'
+      end
+
+      it 'should redirect to companies page' do
+        expect(page).to have_current_path(companies_path)
+      end
+
+      it 'should have new company in list with me as admin' do
+        expect(page).to have_content('My company Inc.')
+        within('tr', text:'My company Inc.') do
+          expect(page).to have_content("admin")
+        end
+      end
+
+    end
+
+    describe 'with invalid data' do
+      it 'should have errors near fields' do
+        click_button 'Add'
+        expect(page).to have_content('Name can\'t be blank')
+      end
+    end
+  end
 end

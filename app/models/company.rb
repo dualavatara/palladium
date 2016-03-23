@@ -6,12 +6,14 @@ class Company
   field :email, type: String
   field :web, type: String
 
+  validates :name, :presence => true
+  validates :email, :email => true, :unless => "email.empty?"
+  validates :web, :url => true,  :unless => "web.empty?"
+
   has_many :roles
 
   after_save do
-    if !has_admin?
-      self.roles.create(name: 'admin', admin: true)
-    end
+      self.roles.create(name: 'admin', admin: true) unless has_admin?
   end
 
   private

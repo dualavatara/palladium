@@ -1,0 +1,37 @@
+<div class="panel panel-default" id="new_company_panel">
+  <div class="panel-heading">
+    <div>New company</div>
+  </div>
+  <div class="panel-body" id="new_company">
+    <%= form_for @company do |f| %>
+        <div class="form-group">
+          <%= f.label :name, 'Name' %>
+          <%= f.text_field :name, class: "form-control", placeholder: 'Your Company Name' %>
+          <% if @company.errors.full_messages_for(:name).any? %>
+              <% @company.errors.full_messages_for(:name).each do |message| %>
+                  <p class="text-danger"><small><%= message %></small></p>
+              <% end %>
+          <% end %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email, 'Email' %>
+          <%= f.text_field :email, class: "form-control", placeholder: 'some@example.com' %>
+          <% if @company.errors.full_messages_for(:email).any? %>
+              <% @company.errors.full_messages_for(:email).each do |message| %>
+                  <p class="text-danger"><small><%= message %></small></p>
+              <% end %>
+          <% end %>
+        </div>
+        <div class="form-group">
+          <%= f.label :web, 'Website' %>
+          <%= f.text_field :web, class: "form-control", placeholder: 'http://' %>
+          <% if @company.errors.full_messages_for(:web).any? %>
+              <% @company.errors.full_messages_for(:web).each do |message| %>
+                  <p class="text-danger"><small><%= message %></small></p>
+              <% end %>
+          <% end %>
+        </div>
+        <%= f.submit "Add", class: "btn btn-default" %>
+    <% end %>
+  </div>
+</div>

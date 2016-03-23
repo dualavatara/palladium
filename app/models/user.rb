@@ -9,6 +9,7 @@ class User
   field :initials, type: String
 
   has_and_belongs_to_many :roles
+  has_and_belongs_to_many :projects
 
   index({ email: 1 }, { unique: true})
 

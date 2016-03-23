@@ -11,6 +11,7 @@ class Company
   validates :web, :url => true,  :unless => "web.empty?"
 
   has_many :roles
+  has_many :projects
 
   after_save do
       self.roles.create(name: 'admin', admin: true) unless has_admin?

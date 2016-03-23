@@ -46,6 +46,7 @@ group :development, :test do
   #gem 'byebug'
   gem 'byebug'
   gem 'rspec-rails'
+  gem 'mongoid-rspec'
   gem 'test-unit'
   gem 'factory_girl_rails'
 end

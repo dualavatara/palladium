@@ -50,4 +50,6 @@ RSpec.describe Company, type: :model do
       end
     end
   end
+
+  it {expect(@company).to have_many(:projects)}
 end

@@ -8,6 +8,7 @@ gem 'rails', '4.2.5.1'
 gem 'mongoid', '~> 5.1.0'
 gem 'bson_ext'
 gem 'mongoid_rails_migrations'
+gem 'mongoid_paranoia'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

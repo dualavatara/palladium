@@ -18,19 +18,13 @@
     </tr>
     </thead>
     <tbody>
-    <%
-      @companies.each do |company|
-        %>
-        <tr>
+    <%= content_tag_for(:tr, @companies) do |company| %>
           <td><a href="<%= company.web %>" target="blank"><%= company.name %></a></td>
           <td><%=
-          @user.rolenames_for(company).join(", ")
+          @user.roles.for(company).pluck(:name).join(", ")
           %></td>
-          <td>&nbsp;</td>
-        </tr>
-    <%
-      end
-    %>
+          <td><%= link_to("Delete", company_path(company.id), method: :delete) if company.destroyable? && company.admin?(@user) %></td>
+    <% end %>
 
     </tbody>
   </table>

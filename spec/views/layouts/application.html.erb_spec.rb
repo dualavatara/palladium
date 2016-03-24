@@ -23,8 +23,8 @@ RSpec.describe "layouts/application", type: :view do
     end
 
     it 'should have name and email in header' do
-      expect(rendered).to have_content('Konstantin Zhukov')
-      expect(rendered).to have_content('test@test.com')
+      expect(rendered).to have_content(@user.name)
+      expect(rendered).to have_content(@user.email)
     end
     it 'should have /signout link in dropdown' do
       expect(rendered).to have_css('.user_menu .dropdown-menu a[href="/signout"]')

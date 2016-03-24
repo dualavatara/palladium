@@ -14,8 +14,15 @@ RSpec.describe "companies/index.html.erb", type: :view do
         FactoryGirl.build(:admin_role, company: @companies[2], name: 'admin'),
     ]
 
-    @user = FactoryGirl.build(:user,
+    @user = FactoryGirl.create(:user,
                                roles: @roles)
+
+
+    @roles[0].users << @user
+
+    @companies.each {|company| company.save}
+    @roles.each {|role| role.save}
+
     assign(:companies, @companies)
     assign(:user, @user)
     render
@@ -36,5 +43,17 @@ RSpec.describe "companies/index.html.erb", type: :view do
 
   it 'should have proper Add link' do
     expect(rendered).to have_link('Add', href: '/companies/new')
+  end
+
+  it 'should have record id in tr tag' do
+    expect(rendered).to have_css("tr#company_#{ @companies[0].id}")
+  end
+
+  it 'should have Delete link for deletable company' do
+    expect(rendered).to have_link('Delete', href: company_path(@companies[0].id))
+  end
+
+  it 'should have no Delete link for undeletable company' do
+    expect(rendered).not_to have_link('Delete', href: company_path(@companies[1].id))
   end
 end

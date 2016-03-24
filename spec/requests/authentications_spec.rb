@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'support/users'
 
 RSpec.describe "Authentications", type: :request do
+
+  include UsersRspecHelpers
 
   before do
     @user = FactoryGirl.create(:user)
@@ -13,9 +16,7 @@ RSpec.describe "Authentications", type: :request do
 
     describe "on successful authentication" do
       it 'should redirect to root_path' do
-        fill_in "authentication_email", with: "test@test.com"
-        fill_in "authentication_password", with: "foobar"
-        click_button 'signin'
+        user_signin(@user.email, @user.password)
         expect(page).to have_current_path(root_path)
       end
     end
@@ -36,9 +37,7 @@ RSpec.describe "Authentications", type: :request do
 
   describe "Signing out" do
     before do
-      fill_in "authentication_email", with: "test@test.com"
-      fill_in "authentication_password", with: "foobar"
-      click_button 'signin'
+      user_signin(@user.email, @user.password)
     end
 
     specify "should route to root after sign out button" do

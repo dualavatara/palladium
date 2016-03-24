@@ -147,11 +147,11 @@ RSpec.describe User, type: :model do
       expect(@user.companies).to include(@companyC)
     end
 
-    it {should respond_to(:rolenames_for)}
+    it {expect(@user.roles).to respond_to(:for)}
 
     it 'should return correct roles list for company' do
-      expect(@user.rolenames_for(@companyA).first).to eq(@companyA.roles[2].name)
-      expect(@user.rolenames_for(@companyC).first).to eq(@companyC.roles[0].name)
+      expect(@user.roles.for(@companyA).first.name).to eq(@companyA.roles[2].name)
+      expect(@user.roles.for(@companyC).first.name).to eq(@companyC.roles[0].name)
     end
   end
 end

@@ -8,7 +8,12 @@ class User
   field :name, type: String
   field :initials, type: String
 
-  has_and_belongs_to_many :roles
+  has_and_belongs_to_many :roles do
+    def for(company)
+      where(company: company)
+    end
+  end
+
   has_and_belongs_to_many :projects
 
   index({ email: 1 }, { unique: true})
@@ -35,10 +40,6 @@ class User
 
   def companies
     Company.find(self.roles.pluck(:company_id))
-  end
-
-  def rolenames_for(company)
-    self.roles.where(company: company).pluck(:name)
   end
 
   private

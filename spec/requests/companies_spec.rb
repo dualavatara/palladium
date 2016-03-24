@@ -5,19 +5,20 @@ RSpec.describe "Companies", type: :request do
   include UsersRspecHelpers
 
   before do
-    @companies = [
-        FactoryGirl.create(:company, name: 'Company A'),
-        FactoryGirl.create(:company, name: 'Company B'),
-        FactoryGirl.create(:company, name: 'Company C')
-    ]
+    @company_a = FactoryGirl.create(:company, name: 'Company A')
+    @company_b = FactoryGirl.create(:company, name: 'Company B')
+    @company_c = FactoryGirl.create(:company, name: 'Company C')
+    @company_d = FactoryGirl.create(:company, name: 'Company D')
+
 
     @user = FactoryGirl.create(:user,
                               roles: [
-                                  @companies[0].roles[0], # role in first company
-                                  @companies[2].roles[1], # role in third company
-                                  @companies[2].roles[3], # role in third company
+                                  @company_a.roles.admins.first, # admin role in first company
+                                  @company_b.roles[1], # common role in third company
+                                  @company_c.roles[1], # common role in third company
+                                  @company_c.roles[3], # common role in third company
                               ])
-    user_signin
+    user_signin(@user.email, @user.password)
   end
 
   describe 'company list' do
@@ -28,16 +29,18 @@ RSpec.describe "Companies", type: :request do
       expect(page).to have_content('Company A')
       expect(page).to have_content('Company C')
     end
-    it 'should not have second company' do
-      expect(page).not_to have_content('Company B')
+
+    it 'should not have fourth company' do
+      expect(page).not_to have_content('Company D')
     end
+
     it 'should have correct roles names in company rows' do
       within('tr', text:'Company A') do
-        expect(page).to have_content(@companies[0].roles[0].name)
+        expect(page).to have_content(@company_a.roles[0].name)
       end
 
       within('tr', text:'Company C') do
-        expect(page).to have_content("#{@companies[2].roles[1].name}, #{@companies[2].roles[3].name}")
+        expect(page).to have_content("#{@company_c.roles[1].name}, #{@company_c.roles[3].name}")
       end
     end
   end
@@ -75,5 +78,35 @@ RSpec.describe "Companies", type: :request do
         expect(page).to have_content('Name can\'t be blank')
       end
     end
+  end
+
+  describe 'with delete company link' do
+    describe 'by admin user' do
+      before do
+        visit '/companies'
+        within("tr#company_#{@company_a.id}") { click_link("Delete") }
+      end
+
+      it 'should redirect to /companies' do
+        expect(page).to have_current_path(companies_path)
+      end
+
+      it 'shouldn`t place company on page`' do
+        expect(page).not_to have_content(@company_a.name)
+      end
+
+    end
+
+    describe 'by not admin user' do
+      before do
+        visit '/companies'
+      end
+
+      it 'should be no Delete link' do
+        within("tr#company_#{@company_b.id}") { expect(page).not_to have_link('Delete') }
+
+      end
+    end
+
   end
 end

@@ -23,9 +23,17 @@ class CompaniesController < ApplicationController
     end
   end
 
+  def destroy
+    @company = Company.find(params[:id])
+
+    @company.destroy if @company.admin?(current_user)
+
+    redirect_to companies_path
+  end
+
   private
 
   def company_params
-    params.require(:company).permit(:name, :email, :web)
+    params.require(:company).permit(:id, :name, :email, :web)
   end
 end

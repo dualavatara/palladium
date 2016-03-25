@@ -1,6 +1,6 @@
 <%=
   panel_with_form_for([@company, @project], 'new_project', 'New project') do |f|
 %>
-    <%= edit_field(f, :name, 'Name', 'Company name') %>
+    <%= edit_field(f, :name, 'Name', 'Project name') %>
     <%= f.submit "Add", class: "btn btn-default" %>
 <% end %>

@@ -1,0 +1,14 @@
+<div class="panel-body" id="profile">
+  <div class="form-group">
+    <%= label_tag :name, 'Name' %>
+    <p class="form-control-static" id="name"><%= @company.name || 'Fill in company name' %></p>
+  </div>
+  <div class="form-group">
+    <%= label_tag :email, 'Email' %>
+    <p class="form-control-static" id="email"><%= link_to @company.email || 'Fill in email', "mailto:#{@company.email}" %></p>
+  </div>
+  <div class="form-group">
+    <%= label_tag :web, 'Website' %>
+    <p class="form-control-static" id="name"><%= @company.web || 'Fill in company website URL' %></p>
+  </div>
+</div>

@@ -104,9 +104,58 @@ RSpec.describe "Companies", type: :request do
 
       it 'should be no Delete link' do
         within("tr#company_#{@company_b.id}") { expect(page).not_to have_link('Delete') }
-
       end
     end
+  end
 
+  context 'company profile' do
+    describe 'for company with current user admin role' do
+      before { visit company_path(@company_a)}
+
+      it {expect(page).to have_content(@company_a.name)}
+      it {expect(page).to have_content(@company_a.email)}
+      it {expect(page).to have_content(@company_a.web)}
+      it {expect(page).to have_link('Edit', href: edit_company_path(@company_a.id))}
+    end
+
+    describe 'for company with current user other role' do
+      before { visit company_path(@company_b)}
+
+      it {expect(page).to have_content(@company_b.name)}
+      it {expect(page).to have_content(@company_b.email)}
+      it {expect(page).to have_content(@company_b.web)}
+      it {expect(page).not_to have_link('Edit', href: edit_company_path(@company_a.id))}
+    end
+
+    describe 'for company with current user other role' do
+      before { visit company_path(@company_d)}
+
+      it {expect(page).to have_current_path(companies_path)}
+    end
+
+    fdescribe 'with edit link clicked' do
+      before do
+        visit company_path(@company_a)
+        click_link('Edit')
+      end
+
+      it 'has form' do
+        expect(page).to have_css("form#edit_company_#{@company_a.id}")
+      end
+
+      describe 'changed name and submitted' do
+        before do
+          fill_in 'company_name', with: 'Sample name'
+          click_button 'Edit'
+        end
+        it 'should have no form on page' do
+          expect(page).not_to have_css("form#edit_company_#{@company_a.id}")
+        end
+        it 'should have new name on page' do
+          expect(page).to have_content('Sample name')
+        end
+      end
+
+    end
   end
 end

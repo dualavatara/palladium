@@ -1,0 +1,9 @@
+<div class="panel-body" id="profile">
+  <%= form_for(@company, remote: true) do |f| %>
+
+      <%= edit_field(f, :name, 'Name', 'Company name') %>
+      <%= edit_field(f, :email, 'Email', 'info@example.com') %>
+      <%= edit_field(f, :web, 'Website', 'http://') %>
+      <%= f.submit "Edit", class: "btn btn-default" %>
+  <% end %>
+</div>

@@ -13,13 +13,15 @@
     <thead>
     <tr>
       <th>Name</th>
+      <th>Website</th>
       <th>Roles</th>
       <th>&nbsp;</th>
     </tr>
     </thead>
     <tbody>
     <%= content_tag_for(:tr, @companies) do |company| %>
-          <td><a href="<%= company.web %>" target="blank"><%= company.name %></a></td>
+          <td><a href="<%= company_path(company.id) %>" target="blank"><%= company.name %></a></td>
+          <td><a href="<%= company.web %>" target="blank"><%= company.web %></a></td>
           <td><%=
           @user.roles.for(company).pluck(:name).join(", ")
           %></td>

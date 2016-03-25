@@ -133,7 +133,7 @@ RSpec.describe "Companies", type: :request do
       it {expect(page).to have_current_path(companies_path)}
     end
 
-    fdescribe 'with edit link clicked' do
+    describe 'with edit link clicked' do
       before do
         visit company_path(@company_a)
         click_link('Edit')

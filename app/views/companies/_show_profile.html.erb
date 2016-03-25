@@ -1,14 +1,22 @@
-<div class="panel-body" id="profile">
-  <div class="form-group">
-    <%= label_tag :name, 'Name' %>
-    <p class="form-control-static" id="name"><%= @company.name || 'Fill in company name' %></p>
-  </div>
-  <div class="form-group">
-    <%= label_tag :email, 'Email' %>
-    <p class="form-control-static" id="email"><%= link_to @company.email || 'Fill in email', "mailto:#{@company.email}" %></p>
-  </div>
-  <div class="form-group">
-    <%= label_tag :web, 'Website' %>
-    <p class="form-control-static" id="name"><%= @company.web || 'Fill in company website URL' %></p>
-  </div>
-</div>
+<%= div_for(@company, class: 'panel panel-default') do %>
+    <div class="panel-heading">
+      <div class="pull-left">Company</div>
+      <div class="text-right">
+        <%= link_to "Edit", edit_company_path(@company.id), remote: true if is_admin?(@user, @company) %>
+      </div>
+    </div>
+    <div class="panel-body" id="profile">
+      <div class="form-group">
+        <%= label_tag :name, 'Name' %>
+        <p class="form-control-static" id="name"><%= @company.name || 'Fill in company name' %></p>
+      </div>
+      <div class="form-group">
+        <%= label_tag :email, 'Email' %>
+        <p class="form-control-static" id="email"><%= link_to @company.email || 'Fill in email', "mailto:#{@company.email}" %></p>
+      </div>
+      <div class="form-group">
+        <%= label_tag :web, 'Website' %>
+        <p class="form-control-static" id="name"><%= @company.web || 'Fill in company website URL' %></p>
+      </div>
+    </div>
+<% end %>

@@ -21,7 +21,7 @@ RSpec.describe "Companies", type: :request do
     user_signin(@user.email, @user.password)
   end
 
-  describe 'company list' do
+  describe 'index' do
 
     before {visit '/companies'}
 
@@ -45,7 +45,7 @@ RSpec.describe "Companies", type: :request do
     end
   end
 
-  describe 'new company' do
+  describe 'new' do
     before { visit '/companies/new' }
     it 'should have new_company form' do
       expect(page).to have_css("#new_company")
@@ -80,7 +80,7 @@ RSpec.describe "Companies", type: :request do
     end
   end
 
-  describe 'with delete company link' do
+  describe 'delete' do
     describe 'by admin user' do
       before do
         visit '/companies'
@@ -108,54 +108,62 @@ RSpec.describe "Companies", type: :request do
     end
   end
 
-  context 'company profile' do
-    describe 'for company with current user admin role' do
+  context 'show' do
+    describe 'by user in admin role' do
       before { visit company_path(@company_a)}
 
-      it {expect(page).to have_content(@company_a.name)}
-      it {expect(page).to have_content(@company_a.email)}
-      it {expect(page).to have_content(@company_a.web)}
-      it {expect(page).to have_link('Edit', href: edit_company_path(@company_a.id))}
+      it 'should have company panel' do
+        expect(page).to have_css("div.panel#company_#{@company_a.id}")
+      end
+
+      it 'should have edit link' do
+        expect(page).to have_link('Edit', href: edit_company_path(@company_a.id))
+      end
+
+      it 'should have projects panel' do
+
+      end
     end
 
-    describe 'for company with current user other role' do
+    describe 'by user in other role' do
       before { visit company_path(@company_b)}
 
-      it {expect(page).to have_content(@company_b.name)}
-      it {expect(page).to have_content(@company_b.email)}
-      it {expect(page).to have_content(@company_b.web)}
-      it {expect(page).not_to have_link('Edit', href: edit_company_path(@company_a.id))}
+      it 'should have company panel' do
+        expect(page).to have_css("div.panel#company_#{@company_b.id}")
+      end
+
+      it 'should not have edit link' do
+        expect(page).not_to have_link('Edit', href: edit_company_path(@company_b.id))
+      end
     end
 
-    describe 'for company with current user other role' do
+    describe 'by user in no role' do
       before { visit company_path(@company_d)}
 
       it {expect(page).to have_current_path(companies_path)}
     end
+  end
 
-    describe 'with edit link clicked' do
+  describe 'edit' do
+    before do
+      visit edit_company_path(@company_a)
+    end
+
+    it 'has form' do
+      expect(page).to have_css("form#edit_company_#{@company_a.id}")
+    end
+
+    describe 'changed name and submitted' do
       before do
-        visit company_path(@company_a)
-        click_link('Edit')
+        fill_in 'company_name', with: 'Sample name'
+        click_button 'Edit'
       end
-
-      it 'has form' do
-        expect(page).to have_css("form#edit_company_#{@company_a.id}")
+      it 'should have no form on page' do
+        expect(page).not_to have_css("form#edit_company_#{@company_a.id}")
       end
-
-      describe 'changed name and submitted' do
-        before do
-          fill_in 'company_name', with: 'Sample name'
-          click_button 'Edit'
-        end
-        it 'should have no form on page' do
-          expect(page).not_to have_css("form#edit_company_#{@company_a.id}")
-        end
-        it 'should have new name on page' do
-          expect(page).to have_content('Sample name')
-        end
+      it 'should have new name on page' do
+        expect(page).to have_content('Sample name')
       end
-
     end
   end
 end

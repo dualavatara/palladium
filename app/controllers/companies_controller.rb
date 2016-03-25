@@ -1,7 +1,8 @@
 class CompaniesController < ApplicationController
   before_action :current_user
-  before_action :has_role?, only: [:show]
-  before_action :is_admin?, only: [:destroy, :edit, :update]
+  before_action :demand_has_role, only: [:show]
+  before_action :demand_be_admin, only: [:destroy, :edit, :update]
+
 
   def index
     @user = current_user
@@ -13,7 +14,7 @@ class CompaniesController < ApplicationController
   end
 
   def show
-    @company = Company.find(params[:id])
+
   end
 
   def edit
@@ -38,6 +39,7 @@ class CompaniesController < ApplicationController
   end
 
   def update
+    @user = current_user
     respond_to do |format|
       if @company.update(company_params)
         format.html { render partial: 'show_profile' }
@@ -50,23 +52,21 @@ class CompaniesController < ApplicationController
   end
 
   def destroy
-    @company.destroy if @company.admin?(current_user)
+    @company.destroy
 
     redirect_to companies_path
   end
 
-  def has_role?
+  def demand_has_role
+    @user = current_user
     @company = Company.find(params[:id])
-    if current_user.roles.for(@company).count > 0
-      true
-    else
-      redirect_to companies_path
-    end
+    redirect_to companies_path unless current_user.roles.for(@company).count > 0
   end
 
-  def is_admin?
+  def demand_be_admin
+    @user = current_user
     @company = Company.find(params[:id])
-    @company.admin?(current_user)
+    redirect_to companies_path unless @company.admin?(@user)
   end
 
   private

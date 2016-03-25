@@ -34,8 +34,6 @@ class Company
     self.roles.admins.pluck(:user_ids).compact.flatten.include?(user.id)
   end
 
-
-
   private
   def has_admin?
     self.roles.where(name: 'admin').first

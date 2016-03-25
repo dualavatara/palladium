@@ -12,14 +12,13 @@ RSpec.describe "companies/index.html.erb", type: :view do
     @company_c = FactoryGirl.build(:company, name: 'Company C')
 
 
-    @roles =[
-        FactoryGirl.build(:admin_role, company: @company_a, name: 'admin'),
-        FactoryGirl.build(:role, company: @company_b),
-        FactoryGirl.build(:admin_role, company: @company_c, name: 'admin'),
-    ]
-
-    @user = FactoryGirl.build(:user,
-                               roles: @roles)
+    # @roles =[
+    #     FactoryGirl.build(:admin_role, company: @company_a, name: 'admin'),
+    #     FactoryGirl.build(:role, company: @company_b),
+    #     FactoryGirl.build(:admin_role, company: @company_c, name: 'admin'),
+    # ]
+    #
+    @user = FactoryGirl.build(:user, roles: @roles)
 
     assign(:companies, [@company_a,  @company_b, @company_c])
     assign(:user, @user)
@@ -49,19 +48,25 @@ RSpec.describe "companies/index.html.erb", type: :view do
 
   context 'with companies and roles in db' do
     before do
-      @roles[0].users << @user
-
-      [@company_a,  @company_b, @company_c].each {|company| company.save}
-      @roles.each {|role| role.save}
-      assign(:companies, [@company_a,  @company_b, @company_c])
-      render
+      # @roles[0].users << @user
+      #
+      # [@company_a,  @company_b, @company_c].each {|company| company.save}
+      # @roles.each {|role| role.save}
+      # assign(:companies, [@company_a,  @company_b, @company_c])
+      # render
     end
 
     it 'should have record id in tr tag' do
+      @company_a.save
+      render
       expect(rendered).to have_css("tr#company_#{ @company_a.id}")
     end
 
     it 'should have Delete link for deletable company' do
+      allow(view).to receive(:destroyable?).and_return(true)
+      allow(view).to receive(:is_admin?).and_return(true)
+      @company_a.save
+      render
       expect(rendered).to have_link('Delete', href: company_path(@company_a.id))
     end
 

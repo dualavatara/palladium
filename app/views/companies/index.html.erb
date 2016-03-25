@@ -23,9 +23,9 @@
           <td><a href="<%= company_path(company.id) %>" target="blank"><%= company.name %></a></td>
           <td><a href="<%= company.web %>" target="blank"><%= company.web %></a></td>
           <td><%=
-          @user.roles.for(company).pluck(:name).join(", ")
+            role_names(@user, company).join(", ")
           %></td>
-          <td><%= link_to("Delete", company_path(company.id), method: :delete) if company.destroyable? && company.admin?(@user) %></td>
+        <td><%= link_to("Delete", company_path(company.id), method: :delete) if destroyable?(company) && is_admin?(@user, company) %></td>
     <% end %>
 
     </tbody>

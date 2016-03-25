@@ -7,31 +7,32 @@ RSpec.describe "Authentications", type: :request do
 
   before do
     @user = FactoryGirl.create(:user)
-    Capybara.reset_sessions!
-    visit '/signin'
+
   end
 
   describe "Signing in" do
 
 
-    describe "on successful authentication" do
+    describe "successful" do
       it 'should redirect to root_path' do
         user_signin(@user.email, @user.password)
         expect(page).to have_current_path(root_path)
       end
     end
 
-    describe "on failed authentication" do
+    describe "failed" do
       before do
-        fill_in "authentication_email", with: "test@test.com"
-        fill_in "authentication_password", with: "wrongpass"
-        click_button 'signin'
+        user_signin(@user.email, "wrongpass")
       end
 
-      it 'should have filled email and empty password fields' do
-        expect(page).to have_field('authentication_email', with: 'test@test.com')
+      it 'should have filled email field' do
+        expect(page).to have_field('authentication_email', with: @user.email)
+      end
+
+      it 'should have empty password field' do
         expect(page).to have_field('authentication_password', with: '')
       end
+
     end
   end
 

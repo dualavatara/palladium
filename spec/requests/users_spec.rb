@@ -7,8 +7,8 @@ RSpec.describe "Users", type: :request do
 
   subject { page }
 
-  describe "Register new user" do
-    describe "Requesting registration form" do
+  describe "register new" do
+    describe "with registration form" do
 
       before do
         @user = FactoryGirl.create(:user)

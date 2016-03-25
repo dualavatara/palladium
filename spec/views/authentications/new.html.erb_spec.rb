@@ -6,16 +6,13 @@ RSpec.describe "authentications/new", type: :view do
     render
   end
 
-  it 'should have id=new_authentication form on it' do
-    expect(rendered).to have_css('#new_authentication')
-  end
+  subject { rendered }
 
-  it 'should have email and password fields and signin button' do
-    visit '/signin'
-    expect(rendered).to have_field('authentication_password')
-    expect(rendered).to have_css('label[for=authentication_password]')
-    expect(rendered).to have_field('authentication_email')
-    expect(rendered).to have_css('label[for=authentication_email]')
-    expect(rendered).to have_button('signin')
-  end
+  it { should have_css('#new_authentication') }
+  it { should have_field('authentication_password') }
+  it { should have_css('label[for=authentication_password]') }
+  it { should have_field('authentication_email') }
+  it { should have_css('label[for=authentication_email]') }
+  it { should have_button('signin') }
+
 end

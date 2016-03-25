@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'companies/index'
-
-  get 'company/index'
-
   get 'static_pages/home'
   get 'static_pages/help'
   get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
@@ -17,8 +13,12 @@ Rails.application.routes.draw do
   resources :authentications, only: [:new, :create, :destroy]
   resources :users
   resources :requirements
-  resources :roles
-  resources :companies
+
+  resources :companies do
+    resources :roles
+    resources :projects
+  end
+
 
   root 'static_pages#home'
   # The priority is based upon order of creation: first created -> highest priority.

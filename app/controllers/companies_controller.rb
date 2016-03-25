@@ -14,7 +14,7 @@ class CompaniesController < ApplicationController
   end
 
   def show
-
+    @projects = @company.projects
   end
 
   def edit

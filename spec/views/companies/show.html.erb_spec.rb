@@ -5,6 +5,7 @@ RSpec.describe "companies/show", type: :view do
     @company = FactoryGirl.build(:company)
     @user = FactoryGirl.build(:user)
     assign(:company, @company)
+    assign(:projects, @company.projects)
     allow(view).to receive(:is_admin?).and_return(true)
     render
   end

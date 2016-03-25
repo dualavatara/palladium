@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'support/users'
+require 'support/shared_examples'
 
 RSpec.describe "Companies", type: :request do
   include UsersRspecHelpers
@@ -109,28 +110,23 @@ RSpec.describe "Companies", type: :request do
   end
 
   context 'show' do
+    subject { page }
     describe 'by user in admin role' do
       before { visit company_path(@company_a)}
 
-      it 'should have company panel' do
-        expect(page).to have_css("div.panel#company_#{@company_a.id}")
-      end
+      it_behaves_like 'has panel', "company"
+      it_behaves_like 'has panel', "projects"
 
       it 'should have edit link' do
         expect(page).to have_link('Edit', href: edit_company_path(@company_a.id))
-      end
-
-      it 'should have projects panel' do
-
       end
     end
 
     describe 'by user in other role' do
       before { visit company_path(@company_b)}
 
-      it 'should have company panel' do
-        expect(page).to have_css("div.panel#company_#{@company_b.id}")
-      end
+      it_behaves_like 'has panel', "company"
+      it_behaves_like 'has panel', "projects"
 
       it 'should not have edit link' do
         expect(page).not_to have_link('Edit', href: edit_company_path(@company_b.id))

@@ -20,7 +20,9 @@
               <td><%=
                 role_names(@user, company).join(", ")
               %></td>
-              <td><%= link_to("Delete", company_path(company.id), method: :delete) if destroyable?(company) && is_admin?(@user, company) %></td>
+              <td><%= link_to("Delete", company_path(company.id), method: :delete,
+                              data: {confirm: 'Deleting company is permanent action. Are you sure?'}
+                      ) if destroyable?(company) && is_admin?(@user, company) %></td>
           <% end %>
 
           </tbody>

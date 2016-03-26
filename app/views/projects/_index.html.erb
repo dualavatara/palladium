@@ -14,7 +14,7 @@
           <tbody>
           <%= content_tag_for(:tr, @projects) do |project| %>
               <td>
-                <a href="<%= company_project_path(project.company.id, project.id) %>" target="blank"><%= project.name %></a>
+                <a href="<%= company_project_path(project.company.id, project.id) %>"><%= project.name %></a>
               </td>
               <td>&nbsp;</td>
           <% end %>

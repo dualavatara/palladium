@@ -3,10 +3,11 @@ require 'support/shared_examples'
 
 RSpec.describe "projects/_index.html.erb", type: :view do
   before do
-    @company = FactoryGirl.build(:company)
+    @company = FactoryGirl.build(:company, id: 777)
     @project_a = FactoryGirl.build(:project, name: 'Project A', id: 1, company: @company)
     @project_b = FactoryGirl.build(:project, name: 'Project B', id: 2, company: @company)
     assign(:projects, [@project_a, @project_b])
+    @path_a = company_project_path(company_id: @company.id, id: @project_a.id)
     render
   end
 
@@ -21,4 +22,14 @@ RSpec.describe "projects/_index.html.erb", type: :view do
     expect(subject).to have_css("tr td", text: 'Project A')
     expect(subject).to have_css("tr td", text: 'Project B')
   end
+
+  it 'should have link to project show' do
+
+    expect(subject).to have_link('Project A', href: @path_a)
+  end
+
+  it 'should not have target="_blank on link"' do
+    expect(subject).not_to have_css("a[href='#{@path_a}'][target=blank]")
+  end
+
 end

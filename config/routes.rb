@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'static_pages/home'
   get 'static_pages/help'
   get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
+  patch 'current_project/:project_id', to: 'users#set_current_project', as: 'set_current_project'
   patch 'profile', to: 'users#update_profile', as: 'update_profile'
   patch 'password', to: 'users#update_password', as: 'update_password'
 
@@ -16,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :companies do
     resources :roles
-    resources :projects
+    resources :projects, shallow: true
   end
 
 

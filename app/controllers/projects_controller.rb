@@ -16,6 +16,14 @@ class ProjectsController < ApplicationController
     @project.company = @company
 
     if @project.save
+      #in success add this project to admin user
+      current_user.projects << @project
+
+      # set as current if there is no current_projects
+      current_user.current_project = @project unless current_user.current_project?
+
+      current_user.save
+
       redirect_to company_path(@company)
     else
       render :new

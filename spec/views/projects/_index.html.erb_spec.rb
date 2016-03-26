@@ -7,7 +7,7 @@ RSpec.describe "projects/_index.html.erb", type: :view do
     @project_a = FactoryGirl.build(:project, name: 'Project A', id: 1, company: @company)
     @project_b = FactoryGirl.build(:project, name: 'Project B', id: 2, company: @company)
     assign(:projects, [@project_a, @project_b])
-    @path_a = company_project_path(company_id: @company.id, id: @project_a.id)
+    @path_a = project_path(@project_a.id)
     render
   end
 

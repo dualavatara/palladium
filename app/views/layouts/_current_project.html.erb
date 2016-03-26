@@ -1,0 +1,16 @@
+<% if available_projects.any? %>
+    <li class="dropdown" id="current_project" data-child-maxwidth="true">
+
+      <a id="drop1" href="javascript(0);" class="dropdown-toggle text-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <%= current_project.name if current_project %>
+        <span class="caret"></span> </a>
+      <ul class="dropdown-menu" aria-labelledby="drop1">
+        <% (available_projects - [current_project]).each do |project| %>
+            <li>
+              <%= link_to project.name, set_current_project_path(project.id), method: :patch, remote: true %>
+            </li>
+        <% end %>
+      </ul>
+
+    </li>
+<% end %>

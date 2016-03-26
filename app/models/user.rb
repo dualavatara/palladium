@@ -15,6 +15,7 @@ class User
   end
 
   has_and_belongs_to_many :projects
+  belongs_to :current_project, :class_name => 'Project', :inverse_of => nil
 
   index({ email: 1 }, { unique: true})
 

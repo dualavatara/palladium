@@ -12,6 +12,7 @@ RSpec.describe User, type: :model do
   it { should respond_to(:authenticate) }
   it { should respond_to(:name) }
   it { should respond_to(:initials) }
+  it { should respond_to(:current_project) }
 
   it { should be_valid }
 
@@ -152,6 +153,43 @@ RSpec.describe User, type: :model do
     it 'should return correct roles list for company' do
       expect(@user.roles.for(@companyA).first.name).to eq(@companyA.roles[2].name)
       expect(@user.roles.for(@companyC).first.name).to eq(@companyC.roles[0].name)
+    end
+  end
+
+  describe 'with projects' do
+    before {
+      @company = FactoryGirl.create(:company)
+      @project_a = FactoryGirl.create(:project, company: @company)
+      @project_b = FactoryGirl.create(:project, company: @company)
+      @user.projects = [@project_a, @project_b]
+      @user.save
+    }
+    describe 'with no current_project' do
+      it 'should be able set current project' do
+        @user.current_project = @project_a
+        @user.save
+        expect(User.find(@user.id).current_project).to eq(@project_a)
+      end
+    end
+
+    describe 'with current project' do
+      before do
+        @user.current_project = @project_a
+        @user.save
+      end
+
+      it 'should be able to change current project' do
+        @user.current_project = @project_b
+        @user.save
+        expect(User.find(@user.id).current_project).to eq(@project_b)
+      end
+    end
+  end
+
+  describe 'without projects' do
+    it 'should have no current project' do
+      @user.save
+      expect(User.find(@user.id).current_project?).to be_falsey
     end
   end
 end

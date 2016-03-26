@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :update_profile, :update_password, :destroy]
+  before_action :set_user, except: [:new, :create]
 
   # GET /users
   # GET /users.json
@@ -102,6 +102,20 @@ class UsersController < ApplicationController
     #   format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
     #   format.json { head :no_content }
     # end
+  end
+
+  # PATCH current_project/1
+  def set_current_project
+    respond_to do |format|
+      if @user.current_project = @user.projects.find(params[:project_id])
+        @user.save
+        format.html { render :partial => 'layouts/current_project' }
+        format.js { render 'layouts/current_project' }
+      else
+        format.html { render :nothing => true  }
+        format.js { render :nothing => true }
+      end
+    end
   end
 
   private

@@ -16,27 +16,33 @@
     <div class="navbar-header">
       <%= link_to "Palladium", '/', class: 'navbar-brand text-uppercase' %>
     </div>
+
+
+    <ul class="nav navbar-nav">
+      <%= render 'layouts/current_project' %>
+    </ul>
+
     <div class="nav navbar-nav navbar-right">
       <% if signed_in? %>
-      <ul class="user_menu">
-        <li role="presentation" class="dropdown">
-          <div class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <div class="pull-left">
-              <h4><%= current_user.name %></h4>
-              <small><%= current_user.email %></small>
-            </div>
-            <div class="pull-right"><span class="caret"></span></div>
-          </div>
-          <ul class="dropdown-menu">
-            <li><%= link_to "Profile", profile_path, id: 'profile_btn' %></li>
-            <li><%= link_to "Companies", companies_path, id: 'companies_btn' %></li>
-            <li role="separator" class="divider"></li>
-            <li><%= link_to "Sign Out", signout_path, id: 'signout_btn' %></li>
+          <ul class="user_menu">
+            <li role="presentation" class="dropdown">
+              <div class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <div class="pull-left">
+                  <h4><%= current_user.name %></h4>
+                  <small><%= current_user.email %></small>
+                </div>
+                <div class="pull-right"><span class="caret"></span></div>
+              </div>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Profile", profile_path, id: 'profile_btn' %></li>
+                <li><%= link_to "Companies", companies_path, id: 'companies_btn' %></li>
+                <li role="separator" class="divider"></li>
+                <li><%= link_to "Sign Out", signout_path, id: 'signout_btn' %></li>
+              </ul>
+            </li>
           </ul>
-        </li>
-      </ul>
       <% end %>
-      <%= link_to "Sign In", signin_path, class: "btn btn-primary navbar-btn", id: 'signin_btn' unless signed_in?%>
+      <%= link_to "Sign In", signin_path, class: "btn btn-primary navbar-btn", id: 'signin_btn' unless signed_in? %>
       <%= link_to "Sign Up", signup_path, class: "btn btn-success navbar-btn", id: 'signup_btn' unless signed_in? %>
 
     </div>

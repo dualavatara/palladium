@@ -1,10 +1,10 @@
 require 'rails_helper'
+require 'support/requirements.rb'
 
 RSpec.describe "requirements/index.html.erb", type: :view do
+  include RequierementsRspecHelpers
   before do
-    @company = FactoryGirl.build(:company)
-    @project = FactoryGirl.build(:project, company: @company)
-    @reqs = ('A'..'C').collect { |c| FactoryGirl.build(:requirement, name: "Req #{c}", project: @project) }
+    @reqs = build_requirements
     assign(:requirements, @reqs)
     render
   end

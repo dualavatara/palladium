@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  get 'requirements/index'
+  get 'projects/:project_id/requirements', to: 'requirements#index', as: 'project_requirements'
+  get 'projects/:project_id/requirements/new', to: 'requirements#new', as: 'new_project_requirement'
+
+
+  get 'requirements/new'
+
+  get 'requirements/show'
+
+  get 'requirements/create'
+
+  get 'requirements/update'
+
   get 'static_pages/home'
   get 'static_pages/help'
   get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
@@ -13,13 +26,11 @@ Rails.application.routes.draw do
 
   resources :authentications, only: [:new, :create, :destroy]
   resources :users
-  resources :requirements
 
   resources :companies do
     resources :roles
     resources :projects, shallow: true
   end
-
 
   root 'static_pages#home'
   # The priority is based upon order of creation: first created -> highest priority.

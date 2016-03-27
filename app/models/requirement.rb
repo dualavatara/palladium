@@ -1,5 +1,10 @@
 class Requirement
   include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Paranoia
+
   field :name, type: String
-  field :description, type: String
+  field :desc, type: String
+
+  belongs_to :project
 end

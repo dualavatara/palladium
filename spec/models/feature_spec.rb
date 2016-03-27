@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Requirement, type: :model do
+RSpec.describe Feature, type: :model do
   before do
     @company = FactoryGirl.build(:company)
     @project = FactoryGirl.build(:project, company: @company)
-    @req = FactoryGirl.build(:requirement, project: @project)
+    @req = FactoryGirl.build(:feature, project: @project)
   end
 
   it {should respond_to(:name)}

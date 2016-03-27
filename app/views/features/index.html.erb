@@ -1,0 +1,15 @@
+<%= link_to 'Add', new_project_feature_path(@project.id) %>
+<table>
+  <thead>
+  <th>Name</th>
+  <th>Description</th>
+  </thead>
+  <tbody>
+  <% @features.each do |feature| %>
+      <tr>
+        <td><%= feature.name %></td>
+        <td><%= feature.desc %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

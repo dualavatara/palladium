@@ -1,4 +1,4 @@
-class Requirement
+class Feature
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Paranoia

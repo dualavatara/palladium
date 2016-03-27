@@ -1,12 +1,12 @@
-class RequirementsController < ApplicationController
+class FeaturesController < ApplicationController
   before_action :find_project, only: [:index, :new]
   def index
 
-    @requirements = @project.requirements
+    @features = @project.features
   end
 
   def new
-    @requirement = Requirement.new
+    @feature = Feature.new
   end
 
   def show

@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
-  get 'requirements/index'
-  get 'projects/:project_id/requirements', to: 'requirements#index', as: 'project_requirements'
-  get 'projects/:project_id/requirements/new', to: 'requirements#new', as: 'new_project_requirement'
+  get 'features/index'
+  get 'projects/:project_id/features', to: 'features#index', as: 'project_features'
+  get 'projects/:project_id/features/new', to: 'features#new', as: 'new_project_feature'
 
 
-  get 'requirements/new'
+  get 'features/new'
 
-  get 'requirements/show'
+  get 'features/show'
 
-  get 'requirements/create'
+  get 'features/create'
 
-  get 'requirements/update'
+  get 'features/update'
 
   get 'static_pages/home'
   get 'static_pages/help'

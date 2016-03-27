@@ -31,6 +31,7 @@ class User
                     else
                       initials.upcase
                     end
+
   end
 
   has_secure_password

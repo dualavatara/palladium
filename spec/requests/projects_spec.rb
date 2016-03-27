@@ -8,6 +8,8 @@ RSpec.describe "Projects", type: :request do
   before do
     @company = FactoryGirl.create(:company)
     @user = FactoryGirl.create(:user,roles: [@company.roles.admins.first])
+    @company.roles.admins.first.users << @user
+    @company.roles.admins.first.save
     user_signin(@user.email, @user.password)
   end
 
@@ -41,10 +43,10 @@ RSpec.describe "Projects", type: :request do
 
     describe 'with projects created' do
       before do
-        fill_in 'Name', with: 'Existing project'
+        fill_in 'project_name', with: 'Existing project'
         click_button 'Add'
         visit "/companies/#{@company.id}/projects/new"
-        fill_in 'Name', with: 'Sample project'
+        fill_in 'project_name', with: 'Sample project'
         click_button 'Add'
       end
 
@@ -74,6 +76,42 @@ RSpec.describe "Projects", type: :request do
     it 'should change header current project' do
       click_link 'Second'
       expect(page).to have_css('a.dropdown-toggle', text: @project_b.name)
+    end
+  end
+
+  describe 'delete' do
+    before do
+      @projects = ('A'..'C').collect { |c| FactoryGirl.create(:project, name:"Project #{c}", company: @company)}
+      @user.projects = @projects
+      @user.current_project = @projects.first
+      @user.save
+      visit company_path(@company)
+    end
+
+    describe 'by admin' do
+      it 'should redirect to company page' do
+        click_link('Delete', href: project_path(@projects.first.id))
+        expect(page).to have_current_path(company_path(@company))
+      end
+
+      it 'should not have it in list' do
+        click_link('Delete', href: project_path(@projects.first.id))
+        expect(page).not_to have_content(@projects.first.name)
+      end
+    end
+
+    describe 'by not admin' do
+      before do
+        @company.roles.admins.first.users = []
+        @company.roles.admins.first.save
+      end
+
+      it 'should have it in list' do
+        click_link('Delete', href: project_path(@projects.first.id))
+        expect(page).to have_content(@projects.first.name)
+      end
+
+      it 'should have no delete link'
     end
   end
 end

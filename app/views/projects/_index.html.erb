@@ -16,7 +16,10 @@
               <td>
                 <a href="<%= project_path(project.id) %>"><%= project.name %></a>
               </td>
-              <td>&nbsp;</td>
+              <td><%=
+                link_to 'Delete', project_path(project.id), :method => :delete,
+                        data: {confirm: 'Deleting project is permanent action. Are you sure?'}
+              %></td>
           <% end %>
 
           </tbody>

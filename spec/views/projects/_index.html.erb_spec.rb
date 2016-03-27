@@ -24,8 +24,11 @@ RSpec.describe "projects/_index.html.erb", type: :view do
   end
 
   it 'should have link to project show' do
-
     expect(subject).to have_link('Project A', href: @path_a)
+  end
+
+  it 'should have Delete link' do
+    expect(subject).to have_link('Delete', project_path(@project_a.id))
   end
 
   it 'should not have target="_blank on link"' do

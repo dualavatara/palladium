@@ -64,6 +64,12 @@ RSpec.describe "layouts/application", type: :view do
         expect(rendered).to have_css('a.dropdown-toggle', text: @project_a.name)
       end
 
+      it 'should have "Choose project..." if no current project' do
+        allow(view).to receive(:current_project) { nil }
+        render
+        expect(rendered).to have_css('a.dropdown-toggle', text: 'Choose project...')
+      end
+
       describe 'more than 1' do
         before do
           @project_b = FactoryGirl.create(:project, company: @company, name: 'Second project')

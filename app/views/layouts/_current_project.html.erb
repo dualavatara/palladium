@@ -2,7 +2,7 @@
     <li class="dropdown" id="current_project" data-child-maxwidth="true">
 
       <a id="drop1" href="javascript:;" class="dropdown-toggle text-right" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-        <%= current_project.name if current_project %>
+        <%= current_project ? current_project.name : 'Choose project...' %>
         <span class="caret"></span> </a>
       <ul class="dropdown-menu" aria-labelledby="drop1">
         <% (available_projects - [current_project]).each do |project| %>

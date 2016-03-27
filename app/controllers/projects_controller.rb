@@ -1,4 +1,8 @@
 class ProjectsController < ApplicationController
+  include CompaniesHelper
+  before_action :current_user
+  before_action :demand_admin, except: [:show]
+
   def index
   end
 
@@ -31,6 +35,20 @@ class ProjectsController < ApplicationController
   end
 
   def update
+  end
+
+  def destroy
+    @project.destroy
+    redirect_to company_path(@company)
+  end
+
+  def demand_admin
+    @user = current_user
+    @project = Project.find(params[:id]) if params[:id]
+    @company = @project.company if @project
+    @company = Company.find(params[:company_id]) if params[:company_id]
+    # @company = Company.find(params[:id])
+    redirect_to companies_path unless @company.admin?(@user)
   end
 
   private

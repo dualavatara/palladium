@@ -1,5 +1,6 @@
-<%= link_to 'Add', new_project_feature_path(@project.id) %>
-<table>
+<% link = link_to 'Add', new_project_feature_path(@project.id) %>
+<%= panel_with_table('features', 'Features', link, nil) do %>
+<table class="table">
   <thead>
   <th>Name</th>
   <th>Description</th>
@@ -13,3 +14,4 @@
   <% end %>
   </tbody>
 </table>
+<% end %>

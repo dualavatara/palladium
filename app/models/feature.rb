@@ -6,5 +6,7 @@ class Feature
   field :name, type: String
   field :desc, type: String
 
+  validates :name, presence: true
+
   belongs_to :project
 end

@@ -22,8 +22,23 @@ RSpec.describe "Features", type: :request do
       before do
         visit new_project_feature_path(@project.id)
       end
+
       it 'should have new form' do
         expect(page).to have_css("form#new_feature")
+      end
+
+      it 'should redirect to project on submit' do
+        fill_in 'Name', with: 'Test feature'
+        fill_in 'Description', with: 'Some text here'
+        click_button 'Add'
+        expect(page).to have_current_path(project_features_path(@project.id))
+      end
+
+      it 'should show errors on misfilled' do
+        fill_in 'Name', with: ''
+        fill_in 'Description', with: 'Some text here'
+        click_button 'Add'
+        expect(page).to have_css('.field_with_errors')
       end
     end
   end

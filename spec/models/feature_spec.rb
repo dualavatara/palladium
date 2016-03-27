@@ -4,7 +4,7 @@ RSpec.describe Feature, type: :model do
   before do
     @company = FactoryGirl.build(:company)
     @project = FactoryGirl.build(:project, company: @company)
-    @req = FactoryGirl.build(:feature, project: @project)
+    @feature = FactoryGirl.build(:feature, project: @project)
   end
 
   it {should respond_to(:name)}
@@ -12,7 +12,14 @@ RSpec.describe Feature, type: :model do
   it {should respond_to(:project)}
 
   it 'should belongs to project' do
-    expect(@req).to be_valid
+    expect(@feature).to be_valid
   end
 
+  it 'should have significant name' do
+    @feature.name = ''
+    expect(@feature).not_to be_valid
+
+    @feature.name = '   '
+    expect(@feature).not_to be_valid
+  end
 end

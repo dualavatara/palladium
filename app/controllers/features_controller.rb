@@ -1,5 +1,5 @@
 class FeaturesController < ApplicationController
-  before_action :find_project, only: [:index, :new]
+  before_action :find_project, only: [:index, :new, :create]
   def index
 
     @features = @project.features
@@ -13,6 +13,13 @@ class FeaturesController < ApplicationController
   end
 
   def create
+    @feature = Feature.new(feature_params)
+    @feature.project = @project
+    if @feature.save
+      redirect_to project_features_path(@project.id)
+    else
+      render :new
+    end
   end
 
   def update
@@ -22,5 +29,10 @@ class FeaturesController < ApplicationController
     @project = params[:project_id] ?
         Project.find(params[:project_id]) :
         current_user.current_project
+  end
+
+  private
+  def feature_params
+    params.require(:feature).permit(:name, :desc)
   end
 end

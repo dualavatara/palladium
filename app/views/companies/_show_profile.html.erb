@@ -5,7 +5,7 @@
         <%= link_to "Edit", edit_company_path(@company.id), remote: true if is_admin?(@user, @company) %>
       </div>
     </div>
-    <div class="panel-body" id="profile">
+  <div class="panel-body">
       <div class="form-group">
         <%= label_tag :name, 'Name' %>
         <p class="form-control-static" id="name"><%= @company.name || 'Fill in company name' %></p>

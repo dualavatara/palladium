@@ -1,2 +1,5 @@
-<%= form_for(@feature, url: project_features_path(@project.id)) do |f| %>
+<%= panel_with_form_for(@feature, 'new_feature', 'New feature', url: project_features_path(@project.id)) do |f| %>
+    <%= f.text_field :name, 'Name', 'Name' %>
+    <%= f.text_field :desc, 'Description', 'Description' %>
+    <%= f.submit "Add", class: "btn btn-default" %>
 <% end %>

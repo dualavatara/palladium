@@ -1,16 +1,19 @@
 module ApplicationHelper
-  def edit_field(builder, field, label, placeholder='')
-    html = '<div class="form-group">'
-    html += builder.label field, label
-    html += builder.text_field field, class: "form-control", placeholder: placeholder
-    if builder.object.errors.full_messages_for(field).any?
-      builder.object.errors.full_messages_for(field).each do |message|
-        html += '<p class="text-danger"><small>' + message + '</small></p>'
+  class ApplicationFromBuilder < ActionView::Helpers::FormBuilder
+    def text_field(field, label, placeholder='')
+      html = '<div class="form-group">'
+      html += self.label field, label
+      html += super(field, class: "form-control", placeholder: placeholder)
+      if self.object.errors.full_messages_for(field).any?
+        self.object.errors.full_messages_for(field).each do |message|
+          html += '<p class="text-danger"><small>' + message + '</small></p>'
+        end
       end
+      html += '</div>'
+      html.html_safe
     end
-    html += '</div>'
-    raw html
   end
+
 
   def panel_heading(title, title_link_html)
     title_class = !title_link_html.blank? ? 'pull-left' : ''
@@ -30,11 +33,12 @@ module ApplicationHelper
     raw html
   end
 
-  def panel_with_form_for(object, id, title, &block)
+  def panel_with_form_for(object, id, title, options={}, &block)
+    options[:builder] = ApplicationFromBuilder
     html = '<div class="panel panel-default" id="' + id + '">'
     html += panel_heading title, ''
     html += '<div class="panel-body">'
-    html += form_for(object) do |f|
+    html += form_for(object, options) do |f|
       capture(f, &block)
     end
     html += '</div>'

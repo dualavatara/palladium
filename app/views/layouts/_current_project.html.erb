@@ -6,11 +6,16 @@
         <span class="caret"></span> </a>
       <ul class="dropdown-menu" aria-labelledby="drop1">
         <% (available_projects - [current_project]).each do |project| %>
-            <li>
+            <li id="project_<%= project.id %>">
               <%= link_to project.name, set_current_project_path(project.id), remote: true %>
             </li>
         <% end %>
       </ul>
 
     </li>
+    <% if current_project %>
+        <li>
+          <%= link_to 'Features', project_features_path(current_project.id) %>
+        </li>
+    <% end %>
 <% end %>

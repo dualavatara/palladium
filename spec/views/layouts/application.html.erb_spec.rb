@@ -39,6 +39,7 @@ RSpec.describe "layouts/application", type: :view do
     describe 'with no projects created' do
       before do
         allow(view).to receive(:available_projects) { []}
+        self.rendered = ''
         render
       end
 
@@ -52,7 +53,8 @@ RSpec.describe "layouts/application", type: :view do
         @company = FactoryGirl.create(:company)
         @project_a = FactoryGirl.create(:project, company: @company, name: 'First project')
         allow(view).to receive(:available_projects) { [@project_a]}
-        allow(view).to receive(:current_project) { @project_a }
+        allow(view).to receive(:current_project) { nil }
+        self.rendered = ''
         render
       end
 
@@ -60,13 +62,7 @@ RSpec.describe "layouts/application", type: :view do
         expect(rendered).to have_css('li.dropdown#current_project')
       end
 
-      it 'should have link with project name' do
-        expect(rendered).to have_css('a.dropdown-toggle', text: @project_a.name)
-      end
-
       it 'should have "Choose project..." if no current project' do
-        allow(view).to receive(:current_project) { nil }
-        render
         expect(rendered).to have_css('a.dropdown-toggle', text: 'Choose project...')
       end
 
@@ -74,18 +70,36 @@ RSpec.describe "layouts/application", type: :view do
         before do
           @project_b = FactoryGirl.create(:project, company: @company, name: 'Second project')
           allow(view).to receive(:available_projects) { [@project_a, @project_b] }
+          self.rendered = ''
           render
         end
-        it 'should have dropdown with other projects' do
-          expect(rendered).to have_css('ul.dropdown-menu li', text: @project_b.name)
-        end
 
-        it 'should not have current project in dropdown menu' do
-          expect(rendered).not_to have_css('ul.dropdown-menu li', text: @project_a.name)
+        it 'should have dropdown with other projects' do
+          expect(rendered).to have_css("li#project_#{@project_b.id}")
         end
 
         it 'should have link to remote change current project' do
           expect(rendered).to have_link(@project_b.name, href: set_current_project_path(@project_b.id))
+        end
+      end
+
+      describe 'with current project set' do
+        before do
+          allow(view).to receive(:current_project) { @project_a }
+          self.rendered = ''
+          render
+        end
+
+        it 'should have link with current project name' do
+          expect(rendered).to have_css('a.dropdown-toggle', text: @project_a.name)
+        end
+
+        it 'should not have current project in dropdown menu' do
+          expect(rendered).not_to have_css("li#project_#{@project_a.id}")
+        end
+
+        it 'should have Features link' do
+          expect(rendered).to have_link('Features', href: project_features_path(@project_a.id))
         end
       end
     end

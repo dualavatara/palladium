@@ -9,22 +9,16 @@ RSpec.describe Feature, type: :model do
   end
 
   it_behaves_like 'weak destroy' do
-    let(:model) { @feature }
+    subject { @feature }
   end
 
-  it {should respond_to(:name)}
-  it {should respond_to(:desc)}
+  it_behaves_like 'named and descripted' do
+    subject { @feature }
+  end
+
   it {should respond_to(:project)}
 
   it 'should belongs to project' do
     expect(@feature).to be_valid
-  end
-
-  it 'should have significant name' do
-    @feature.name = ''
-    expect(@feature).not_to be_valid
-
-    @feature.name = '   '
-    expect(@feature).not_to be_valid
   end
 end

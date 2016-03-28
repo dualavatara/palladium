@@ -18,11 +18,6 @@ RSpec.describe Project, type: :model do
   it {should belong_to(:company)}
 
   describe 'always belong to company' do
-    it 'should be invalid without company' do
-      subject.company = nil
-      expect(subject).not_to be_valid
-    end
-
     it 'should be valid with company' do
       subject.company = FactoryGirl.build(:company)
       expect(subject).to be_valid

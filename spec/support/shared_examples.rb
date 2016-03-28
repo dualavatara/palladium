@@ -8,13 +8,26 @@ end
 
 RSpec.shared_examples 'weak destroy' do
   before do
-    model.destroy
+    subject.destroy
   end
 
   it 'should be marked as deleted' do
-    expect(model.class.where(:_id => model.id, :deleted_at.ne => nil).count).to be(1)
+    expect(subject.class.where(:_id => subject.id, :deleted_at.ne => nil).count).to be(1)
   end
 
+end
+
+RSpec.shared_examples 'named and descripted' do
+  it {should respond_to(:name)}
+  it {should respond_to(:desc)}
+
+  it 'should have significant name' do
+    subject.name = ''
+    should_not be_valid
+
+    subject.name = '   '
+    should_not be_valid
+  end
 end
 
 RSpec::Matchers.define :have_panel do |id|

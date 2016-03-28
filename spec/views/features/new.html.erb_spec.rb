@@ -1,12 +1,9 @@
 require 'rails_helper'
-require 'support/features'
 
 RSpec.describe "features/new.html.erb", type: :view do
-  include FeaturesRspecHelpers
   before do
-    @reqs = build_features
-    assign(:project, @project)
-    assign(:feature, Feature.new)
+    @project = FactoryGirl.build(:project)
+    @feature = Feature.new
     render
   end
 

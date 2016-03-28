@@ -5,19 +5,20 @@
 
 <%= panel_with_table('actors', 'Actors', add_link, text) do %>
     <% if @actors.any? %>
-    <table class="table">
-      <thead>
-      <th>Name</th>
-      <th>Description</th>
-      <th>&nbsp;</th>
-      </thead>
-      <tbody>
-      <%= content_tag_for(:tr, @actors) do |actor| %>
-      <td><%= actor.name %></td>
-      <td><%= actor.desc %></td>
-      <td>&nbsp;</td>
-      <% end %>
-      </tbody>
-    </table>
-        <% end %>
+        <table class="table">
+          <thead>
+          <th>Name</th>
+          <th>Description</th>
+          <th>&nbsp;</th>
+          </thead>
+          <tbody>
+          <%= content_tag_for(:tr, @actors) do |actor| %>
+              <td><%= actor.name %></td>
+              <td><%= actor.desc %></td>
+              <td><%= link_to 'Delete', project_actor_path(@project.id, actor.id),
+                              method: :delete, data: {confirm: 'Deleting actor is permanent action. Are you sure?'} %></td>
+          <% end %>
+          </tbody>
+        </table>
+    <% end %>
 <% end %>

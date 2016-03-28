@@ -20,4 +20,10 @@ RSpec.describe "actors/index.html.erb", type: :view do
   it {should have_content(@actors.first.name)}
   it {should have_content(@actors.first.desc)}
   it {should have_link('Add', href:new_project_actor_path(@project.id))}
+
+  it 'should have Delete link for objects' do
+    @actors.each do |actor|
+      expect(rendered).to have_link('Delete', href: project_actor_path(@project.id, actor.id))
+    end
+  end
 end

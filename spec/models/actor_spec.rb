@@ -1,9 +1,15 @@
 require 'rails_helper'
+require 'support/shared_examples'
 
 RSpec.describe Actor, type: :model do
   before do
     @actor = FactoryGirl.build(:actor)
   end
+
+  it_behaves_like 'weak destroy' do
+    let(:model) { FactoryGirl.create(:actor) }
+  end
+
   it {should respond_to(:name)}
   it {should respond_to(:desc)}
   it {should belong_to(:project)}

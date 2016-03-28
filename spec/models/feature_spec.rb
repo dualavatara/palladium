@@ -1,10 +1,15 @@
 require 'rails_helper'
+require 'support/shared_examples'
 
 RSpec.describe Feature, type: :model do
   before do
     @company = FactoryGirl.create(:company)
     @project = FactoryGirl.create(:project, company: @company)
     @feature = FactoryGirl.create(:feature, project: @project)
+  end
+
+  it_behaves_like 'weak destroy' do
+    let(:model) { @feature }
   end
 
   it {should respond_to(:name)}
@@ -21,10 +26,5 @@ RSpec.describe Feature, type: :model do
 
     @feature.name = '   '
     expect(@feature).not_to be_valid
-  end
-
-  it 'should be marked as deleted' do
-    @feature.destroy
-    expect(Feature.where(:_id => @feature.id, :deleted_at.ne => nil).count).to be(1)
   end
 end

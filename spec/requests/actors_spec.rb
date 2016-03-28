@@ -49,4 +49,22 @@ RSpec.describe "Actors", type: :request do
       expect(page).to have_content('Test actor 2')
     end
   end
+
+  describe 'destroy' do
+    before do
+      visit project_actors_path(@project.id)
+      @actor = @project.actors.first
+      within("tr#actor_#{@actor.id}") do
+        click_link 'Delete'
+      end
+    end
+
+    it 'should redirect to actors list' do
+      expect(page).to have_current_path(project_actors_path(@project.id))
+    end
+
+    it 'should not contain deleted actor' do
+      expect(page).not_to have_css("tr#actor_#{@actor.id}")
+    end
+  end
 end

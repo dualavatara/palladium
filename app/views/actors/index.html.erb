@@ -1,5 +1,10 @@
-<% add_link = link_to 'Add', new_project_actor_path(@project.id) %>
-<%= panel_with_table('actors', 'Actors', add_link, '') do %>
+<%
+  add_link = link_to 'Add', new_project_actor_path(@project.id)
+  text = "No actors added. You can add feature with 'Add' link." if @actors.empty?
+%>
+
+<%= panel_with_table('actors', 'Actors', add_link, text) do %>
+    <% if @actors.any? %>
     <table>
       <thead>
       <th>Name</th>
@@ -13,4 +18,5 @@
       <% end %>
       </tbody>
     </table>
+        <% end %>
 <% end %>

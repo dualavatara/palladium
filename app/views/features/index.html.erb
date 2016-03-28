@@ -1,5 +1,9 @@
-<% link = link_to 'Add', new_project_feature_path(@project.id) %>
-<%= panel_with_table('features', 'Features', link, nil) do %>
+<%
+  link = link_to 'Add', new_project_feature_path(@project.id)
+  text = "No features added. You can add feature with 'Add' link." if @features.empty?
+%>
+<%= panel_with_table('features', 'Features', link, text) do %>
+    <% if @features.any? %>
 <table class="table">
   <thead>
   <th>Name</th>
@@ -15,4 +19,5 @@
   <% end %>
   </tbody>
 </table>
+        <% end %>
 <% end %>

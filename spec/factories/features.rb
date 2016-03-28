@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :feature do
-    name 'Feature name'
+    sequence(:name) {|n| "Feature name #{n}"}
     desc 'Feature description'
     project
   end

@@ -44,7 +44,7 @@ RSpec.describe "Features", type: :request do
     describe 'destroy' do
       before do
         visit project_features_path(@project.id)
-        within("tr##{@features[1].id}") do
+        within("tr#feature_#{@features[1].id}") do
           click_link 'Delete'
         end
       end

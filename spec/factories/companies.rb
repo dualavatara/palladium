@@ -4,14 +4,9 @@ FactoryGirl.define do
     web "http://www.somethinggmbh.com"
     email "info@somethinggmbh.com"
 
-    transient do
-      role_count 5
-      project_count 1
-    end
-
-    after(:create) do |company, evaluator|
-      create_list(:role, evaluator.role_count, company: company)
-      create_list(:project, evaluator.project_count, company: company)
+    after(:create) do |company|
+      create_list(:role, 3, company: company)
+      create_list(:project, 3, company: company)
     end
   end
 end

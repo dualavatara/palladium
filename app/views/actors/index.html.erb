@@ -1,0 +1,16 @@
+<% add_link = link_to 'Add', new_project_actor_path(@project.id) %>
+<%= panel_with_table('actors', 'Actors', add_link, '') do %>
+    <table>
+      <thead>
+      <th>Name</th>
+      <th>Description</th>
+      <th>&nbsp;</th>
+      </thead>
+      <tbody>
+      <%= content_tag_for(:tr, @actors) do |actor| %>
+      <td><%= actor.name %></td>
+      <td><%= actor.desc %></td>
+      <% end %>
+      </tbody>
+    </table>
+<% end %>

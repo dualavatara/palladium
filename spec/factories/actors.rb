@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :actor do
-    name "Sample actor"
-    desc "Samole actor description"
+    sequence(:name) {|n| "Sample actor #{n}"}
+    desc "Sample actor description"
   end
 end

@@ -24,7 +24,7 @@ RSpec.describe Project, type: :model do
     end
 
     it 'should be valid with company' do
-      subject.company = FactoryGirl.build(:company, role_count: 1)
+      subject.company = FactoryGirl.build(:company)
       expect(subject).to be_valid
     end
   end

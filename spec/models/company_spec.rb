@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Company, type: :model do
   before do
-    @company = FactoryGirl.create(:company, role_count: 3)
+    @company = FactoryGirl.create(:company)
   end
 
   subject { @company }

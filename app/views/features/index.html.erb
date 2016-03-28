@@ -7,13 +7,11 @@
   <th>&nbsp;</th>
   </thead>
   <tbody>
-  <% @features.each do |feature| %>
-      <tr id="<%= feature.id %>">
+  <%= content_tag_for(:tr, @features) do |feature|%>
         <td><%= feature.name %></td>
         <td><%= feature.desc %></td>
         <td><%= link_to 'Delete', project_feature_path(@project.id, feature.id),
                         method: :delete, data: {confirm: 'Deleting feature is permanent action. Are you sure?'} %></td>
-      </tr>
   <% end %>
   </tbody>
 </table>

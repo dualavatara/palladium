@@ -114,8 +114,8 @@ RSpec.describe "Companies", type: :request do
     describe 'by user in admin role' do
       before { visit company_path(@company_a)}
 
-      it_behaves_like 'has panel', "company"
-      it_behaves_like 'has panel', "projects"
+      it {should have_panel('company')}
+      it {should have_panel('projects')}
 
       it 'should have edit link' do
         expect(page).to have_link('Edit', href: edit_company_path(@company_a.id))
@@ -125,8 +125,8 @@ RSpec.describe "Companies", type: :request do
     describe 'by user in other role' do
       before { visit company_path(@company_b)}
 
-      it_behaves_like 'has panel', "company"
-      it_behaves_like 'has panel', "projects"
+      it {should have_panel('company')}
+      it {should have_panel('projects')}
 
       it 'should not have edit link' do
         expect(page).not_to have_link('Edit', href: edit_company_path(@company_b.id))

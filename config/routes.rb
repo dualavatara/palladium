@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'actors/index'
+
   get 'features/index'
   get 'projects/:project_id/features', to: 'features#index', as: 'project_features'
   get 'projects/:project_id/features/new', to: 'features#new', as: 'new_project_feature'
@@ -6,13 +8,8 @@ Rails.application.routes.draw do
   get 'projects/:project_id/feature/:id', to: 'features#show', as: 'project_feature'
   delete 'projects/:project_id/feature/:id', to: 'features#destroy'
 
-  get 'features/new'
-
-  get 'features/show'
-
-  get 'features/create'
-
-  get 'features/update'
+  get 'projects/:project_id/actors', to: 'actors#index', as: 'project_actors'
+  get 'projects/:project_id/actors/new', to: 'actors#new', as: 'new_project_actor'
 
   get 'static_pages/home'
   get 'static_pages/help'

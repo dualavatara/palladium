@@ -13,7 +13,7 @@ RSpec.describe "projects/_index.html.erb", type: :view do
 
   subject { rendered }
 
-  it_behaves_like 'has panel', "projects"
+  it {should have_panel('projects')}
 
   it 'should have Add link for admin' do
     expect(subject).to have_link('Add', href: new_company_project_path(@company.id))

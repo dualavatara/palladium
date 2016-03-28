@@ -1,5 +1,6 @@
 require 'rails_helper'
-require 'support/features.rb'
+require 'support/features'
+require 'support/shared_examples'
 
 RSpec.describe "features/index.html.erb", type: :view do
   include FeaturesRspecHelpers
@@ -10,7 +11,8 @@ RSpec.describe "features/index.html.erb", type: :view do
   end
 
   it 'should have features list' do
-    ('A'..'C').each { |c| expect(render).to have_content("Req #{c}") }
+    # ('A'..'C').each { |c| expect(render).to have_content("Req #{c}") }
+    expect(rendered).to have_object_table(@features)
   end
 
   it 'should have Add link' do

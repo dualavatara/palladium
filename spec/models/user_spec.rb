@@ -121,9 +121,9 @@ RSpec.describe User, type: :model do
 
   describe 'with roles' do
     before do
-      @companyA = FactoryGirl.create(:company, role_count: 5) #company where user have other role
-      @companyB = FactoryGirl.create(:company, role_count: 0) #company where user have no roles
-      @companyC = FactoryGirl.create(:company, role_count: 3) #company where user have admin role
+      @companyA = FactoryGirl.create(:company) #company where user have other role
+      @companyB = FactoryGirl.create(:company) #company where user have no roles
+      @companyC = FactoryGirl.create(:company) #company where user have admin role
       @roleInA = @companyA.roles[2]
       @roleInC = @companyC.roles.first
       @user = FactoryGirl.create(:user,

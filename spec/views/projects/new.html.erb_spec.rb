@@ -13,7 +13,7 @@ RSpec.describe "projects/new.html.erb", type: :view do
 
   subject { rendered }
 
-  it_behaves_like 'has panel', "new_project"
+  it {should have_panel('new_project')}
 
   it 'should have name field' do
     expect(subject).to have_field('Name')

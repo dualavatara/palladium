@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
   get 'projects/:project_id/actors', to: 'actors#index', as: 'project_actors'
   get 'projects/:project_id/actors/new', to: 'actors#new', as: 'new_project_actor'
+  post 'projects/:project_id/actors', to: 'actors#create'
 
   get 'static_pages/home'
   get 'static_pages/help'

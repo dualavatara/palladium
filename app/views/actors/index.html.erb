@@ -5,7 +5,7 @@
 
 <%= panel_with_table('actors', 'Actors', add_link, text) do %>
     <% if @actors.any? %>
-    <table>
+    <table class="table">
       <thead>
       <th>Name</th>
       <th>Description</th>
@@ -15,6 +15,7 @@
       <%= content_tag_for(:tr, @actors) do |actor| %>
       <td><%= actor.name %></td>
       <td><%= actor.desc %></td>
+      <td>&nbsp;</td>
       <% end %>
       </tbody>
     </table>

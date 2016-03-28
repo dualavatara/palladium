@@ -7,7 +7,7 @@ RSpec.describe "Features", type: :request do
     @features = ('A'..'C').collect { |c| FactoryGirl.create(:feature, name: "Feature #{c}", project: @project) }
   end
 
-  describe 'for project_id in requiest ' do
+  describe 'for project_id in request ' do
     describe 'index' do
       before do
         visit project_features_path(@project.id)

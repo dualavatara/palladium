@@ -11,4 +11,5 @@ class Project
   belongs_to :company
   has_and_belongs_to_many :users
   has_many :features
+  has_many :actors
 end

@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'projects/:project_id/features', to: 'features#index', as: 'project_features'
   get 'projects/:project_id/features/new', to: 'features#new', as: 'new_project_feature'
   post 'projects/:project_id/features', to: 'features#create'
+  get 'projects/:project_id/feature/:id', to: 'features#show', as: 'project_feature'
+  delete 'projects/:project_id/feature/:id', to: 'features#destroy'
 
   get 'features/new'
 

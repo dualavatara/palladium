@@ -1,5 +1,5 @@
 class FeaturesController < ApplicationController
-  before_action :find_project, only: [:index, :new, :create]
+  before_action :find_project, only: [:index, :new, :create, :destroy]
   def index
 
     @features = @project.features
@@ -23,6 +23,12 @@ class FeaturesController < ApplicationController
   end
 
   def update
+  end
+
+  def destroy
+    @feature = Feature.find(params[:id])
+    @feature.destroy
+    redirect_to project_features_path(@project.id)
   end
 
   def find_project

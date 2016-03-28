@@ -4,7 +4,7 @@ RSpec.describe "Features", type: :request do
   before do
     @company = FactoryGirl.create(:company)
     @project = FactoryGirl.create(:project, company: @company)
-    @reqs = ('A'..'C').collect { |c| FactoryGirl.create(:feature, name: "Req #{c}", project: @project) }
+    @features = ('A'..'C').collect { |c| FactoryGirl.create(:feature, name: "Feature #{c}", project: @project) }
   end
 
   describe 'for project_id in requiest ' do
@@ -14,7 +14,7 @@ RSpec.describe "Features", type: :request do
       end
 
       it 'should list features' do
-        ('A'..'C').each { |c| expect(page).to have_content("Req #{c}") }
+        ('A'..'C').each { |c| expect(page).to have_content("Feature #{c}") }
       end
     end
 
@@ -27,7 +27,7 @@ RSpec.describe "Features", type: :request do
         expect(page).to have_css("form#new_feature")
       end
 
-      it 'should redirect to project on submit' do
+      it 'should redirect to feature list' do
         fill_in 'Name', with: 'Test feature'
         fill_in 'Description', with: 'Some text here'
         click_button 'Add'
@@ -39,6 +39,22 @@ RSpec.describe "Features", type: :request do
         fill_in 'Description', with: 'Some text here'
         click_button 'Add'
         expect(page).to have_css('.field_with_errors')
+      end
+    end
+    describe 'destroy' do
+      before do
+        visit project_features_path(@project.id)
+        within("tr##{@features[1].id}") do
+          click_link 'Delete'
+        end
+      end
+
+      it 'should redirect to feature list' do
+        expect(page).to have_current_path(project_features_path(@project.id))
+      end
+
+      it 'should not contain deleted feature' do
+        expect(page).not_to have_css("tr##{@features[1].id}")
       end
     end
   end

@@ -4,12 +4,15 @@
   <thead>
   <th>Name</th>
   <th>Description</th>
+  <th>&nbsp;</th>
   </thead>
   <tbody>
   <% @features.each do |feature| %>
-      <tr>
+      <tr id="<%= feature.id %>">
         <td><%= feature.name %></td>
         <td><%= feature.desc %></td>
+        <td><%= link_to 'Delete', project_feature_path(@project.id, feature.id),
+                        method: :delete, data: {confirm: 'Deleting feature is permanent action. Are you sure?'} %></td>
       </tr>
   <% end %>
   </tbody>

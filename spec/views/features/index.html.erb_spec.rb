@@ -4,8 +4,8 @@ require 'support/features.rb'
 RSpec.describe "features/index.html.erb", type: :view do
   include FeaturesRspecHelpers
   before do
-    @reqs = build_features
-    assign(:features, @reqs)
+    @features = build_features
+    assign(:features, @features)
     render
   end
 
@@ -17,4 +17,7 @@ RSpec.describe "features/index.html.erb", type: :view do
     expect(render).to have_link('Add', href: new_project_feature_path(@project.id))
   end
 
+  it 'should have Delete link' do
+    expect(render).to have_link('Delete', href: project_feature_path(@project.id, @features.first.id))
+  end
 end

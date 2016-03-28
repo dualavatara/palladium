@@ -1,0 +1,13 @@
+<%= panel_with_form_for(@story, 'new_story', 'New story', url: feature_stories_path(@feature.id)) do |f| %>
+    <%= f.label :actor_id, 'Actor' %>
+    <%= collection_select(:story, :actor_id, @feature.project.actors.all, :id, :name, {prompt: true}, {class: "form-control"}) %>
+    <% if @story.errors.full_messages_for(:actor).any?
+         @story.errors.full_messages_for(:actor).each do |message|
+           %><p class="text-danger"><small><%= message %></small></p><%
+         end
+       end
+    %>
+    <%= f.text_field :name, 'Name', 'Name' %>
+    <%= f.text_field :desc, 'Deacription', 'Description' %>
+    <%= f.submit "Add", class: "btn btn-default" %>
+<% end %>

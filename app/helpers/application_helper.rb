@@ -33,6 +33,12 @@ module ApplicationHelper
     raw html
   end
 
+  # Renders panel with form for object
+  # @param [Mongoid::Document] object
+  # @param [String] id attribute for panel
+  # @param [String] title for panel
+  # @param [Hash] options for form_for
+  # @yield
   def panel_with_form_for(object, id, title, options={}, &block)
     options[:builder] = ApplicationFromBuilder
     html = '<div class="panel panel-default" id="' + id + '">'

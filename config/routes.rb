@@ -19,7 +19,8 @@ Rails.application.routes.draw do
   get 'features/:feature_id/stories', to: 'stories#index', as: 'feature_stories'
   get 'story/:id', to: 'stories#show', as: 'story'
   delete 'story/:id', to: 'stories#destroy'
-  post 'features/:feature_id/stories', to: 'stories#create', as: 'new_feature_story'
+  get 'features/:feature_id/stories/new', to: 'stories#new', as: 'new_feature_story'
+  post 'features/:feature_id/stories', to: 'stories#create'
 
   get 'static_pages/home'
   get 'static_pages/help'

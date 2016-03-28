@@ -4,5 +4,8 @@ class Story
   include Mongoid::Paranoia
   include NamedAndDescribed
 
+  belongs_to :actor, inverse_of: nil
   belongs_to :feature
+
+  validates :actor, presence: true
 end

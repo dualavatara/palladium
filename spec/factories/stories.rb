@@ -1,6 +1,9 @@
 FactoryGirl.define do
   factory :story do
-    name "MyString"
-    desc "MyString"
+    sequence(:name) {|n| "Sample story #{n}"}
+    desc "Description text"
+
+    actor
+    feature
   end
 end

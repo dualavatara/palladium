@@ -14,8 +14,7 @@
 
     </li>
     <% if current_project %>
-        <li>
-          <%= link_to 'Features', project_features_path(current_project.id) %>
-        </li>
+        <li><%= link_to 'Features', project_features_path(current_project.id) %></li>
+        <li><%= link_to 'Actors', project_actors_path(current_project.id) %></li>
     <% end %>
 <% end %>

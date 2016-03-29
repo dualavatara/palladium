@@ -38,6 +38,21 @@ RSpec.describe "Stories", type: :request do
       click_button 'Add'
       expect(page).to have_css('.text-danger')
     end
+  end
 
+  describe 'destroy' do
+    before do
+      @deleted_id = @feature.stories.first.id
+      visit feature_stories_path(@feature.id)
+      within("tr#story_#{@deleted_id}") {click_link('Delete')}
+    end
+
+    it 'should be stories page' do
+      expect(page).to have_current_path(feature_stories_path(@feature.id))
+    end
+
+    it 'should not contain deleted story' do
+      expect(page).not_to have_css("tr#story_#{@deleted_id}")
+    end
   end
 end

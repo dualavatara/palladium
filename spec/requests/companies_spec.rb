@@ -19,7 +19,7 @@ RSpec.describe "Companies", type: :request do
                                   @company_c.roles[1], # common role in third company
                                   @company_c.roles[3], # common role in third company
                               ])
-    user_signin(@user.email, @user.password)
+    signin(@user.email, @user.password)
   end
 
   describe 'index' do

@@ -13,10 +13,12 @@ class Task
   belongs_to :requester, :class_name => 'User'
   has_and_belongs_to_many :owners, :class_name => 'User', inverse_of: nil
 
-  belongs_to :project, inverse_of: nil
+  belongs_to :project
   belongs_to :story, inverse_of: nil
 
   validates :type, presence: true
+  validates :state, presence: true
+  validates :project, presence: true
   validates :story, presence: true, if: :is_story?
 
   def is_story?

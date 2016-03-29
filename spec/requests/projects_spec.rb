@@ -10,7 +10,7 @@ RSpec.describe "Projects", type: :request do
     @user = FactoryGirl.create(:user,roles: [@company.roles.admins.first])
     @company.roles.admins.first.users << @user
     @company.roles.admins.first.save
-    user_signin(@user.email, @user.password)
+    signin(@user.email, @user.password)
   end
 
   describe 'new' do

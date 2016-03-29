@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
 
+  # get 'tasks/index'
+  #
+  # get 'tasks/show'
+  #
+  # get 'tasks/new'
+  #
+  # get 'tasks/create'
+  #
+  # get 'tasks/destroy'
+
+  get 'tasks/new', to: 'tasks#new', as: 'new_task'
+  get 'tasks', to: 'tasks#index', as: 'tasks'
+  post 'tasks', to: 'tasks#create'
+
   get 'features/index'
   get 'projects/:project_id/features', to: 'features#index', as: 'project_features'
   get 'projects/:project_id/features/new', to: 'features#new', as: 'new_project_feature'

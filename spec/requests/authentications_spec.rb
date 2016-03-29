@@ -15,14 +15,14 @@ RSpec.describe "Authentications", type: :request do
 
     describe "successful" do
       it 'should redirect to root_path' do
-        user_signin(@user.email, @user.password)
+        signin(@user.email, @user.password)
         expect(page).to have_current_path(root_path)
       end
     end
 
     describe "failed" do
       before do
-        user_signin(@user.email, "wrongpass")
+        signin(@user.email, "wrongpass")
       end
 
       it 'should have filled email field' do
@@ -38,7 +38,7 @@ RSpec.describe "Authentications", type: :request do
 
   describe "Signing out" do
     before do
-      user_signin(@user.email, @user.password)
+      signin(@user.email, @user.password)
     end
 
     specify "should route to root after sign out button" do

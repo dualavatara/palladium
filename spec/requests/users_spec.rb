@@ -47,7 +47,7 @@ RSpec.describe "Users", type: :request do
 
       describe "for authenticated users" do
         before do
-          user_signin(@user.email, @user.password)
+          signin(@user.email, @user.password)
           visit '/signup'
         end
 
@@ -72,7 +72,7 @@ RSpec.describe "Users", type: :request do
 
   describe 'user profile' do
     before do
-      user_create_signin
+      create_signin
       visit '/profile'
     end
 
@@ -115,7 +115,7 @@ RSpec.describe "Users", type: :request do
       fill_in 'user_password_confirmation', with: 'testpass'
       click_button 'Set password'
       visit '/signout'
-      user_signin(@user.email, 'testpass')
+      signin(@user.email, 'testpass')
       expect(page).to have_current_path(root_path)
     end
 

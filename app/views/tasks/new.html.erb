@@ -1,0 +1,9 @@
+<%=
+  panel_with_form_for(@task, 'new_task', 'New task', url: tasks_path) do |f|
+%>
+    <%= f.label :type, 'Type' %>
+    <%= select(:task, :type, [[:story], [:bug], [:service]], {}, {class: "form-control"}) %>
+    <%= f.text_field :name, 'Name', 'Name' %>
+    <%= f.text_field :desc, 'Description', 'Description' %>
+    <%= f.submit "Add", class: "btn btn-default" %>
+<% end %>

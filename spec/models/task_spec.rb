@@ -44,9 +44,9 @@ RSpec.describe Task, type: :model do
     expect(task.state).to be(:unstarted)
   end
 
-  it 'can belong to a project' do
-    @task.project = Project.new()
-    expect(@task).to be_valid
+  it 'should belong to a project' do
+    @task.project = nil
+    expect(@task).not_to be_valid
   end
 
   shared_examples_for 'story required' do |param|

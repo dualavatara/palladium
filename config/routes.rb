@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'stories/index'
-
-  get 'actors/index'
 
   get 'features/index'
   get 'projects/:project_id/features', to: 'features#index', as: 'project_features'

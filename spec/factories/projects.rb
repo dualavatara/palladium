@@ -5,6 +5,7 @@ FactoryGirl.define do
     after(:create) do |project|
       create_list(:feature, 3, project: project)
       create_list(:actor, 3, project: project)
+      create_list(:task, 3, project: project)
     end
   end
 end

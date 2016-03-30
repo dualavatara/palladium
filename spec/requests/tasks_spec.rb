@@ -82,4 +82,20 @@ RSpec.describe "Tasks", type: :request do
       expect(page).to have_object_table(@user.current_project.tasks)
     end
   end
+
+  describe 'delete' do
+    before do
+      @task_id = @user.current_project.tasks.second.id
+      visit tasks_path
+      click_link('Delete', href: task_path(@task_id))
+    end
+
+    it 'should remove task from list' do
+      expect(page).not_to have_css("tr#task_#{@task_id}")
+    end
+
+    it 'should remove task from db' do
+      expect(Task.where(id: @task_id).count).to eq(0)
+    end
+  end
 end

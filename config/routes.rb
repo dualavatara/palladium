@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   # get 'tasks/destroy'
 
   get 'task/:id', to: 'task#show', as: 'task'
-  delete 'task/:id', to: 'task#destroy'
+  delete 'task/:id', to: 'tasks#destroy'
   get 'tasks/new', to: 'tasks#new', as: 'new_task'
   get 'tasks', to: 'tasks#index', as: 'tasks'
   post 'tasks', to: 'tasks#create'

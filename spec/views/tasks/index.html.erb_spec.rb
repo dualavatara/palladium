@@ -17,5 +17,7 @@ RSpec.describe "tasks/index.html.erb", type: :view do
     expect(rendered).to have_object_table(@tasks)
   end
 
-  it 'should have correct rows'
+  it 'should have delete link for each task' do
+    @tasks.each { |task| expect(rendered).to have_link('Delete', href: task_path(task.id))}
+  end
 end

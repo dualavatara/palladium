@@ -11,7 +11,7 @@ RSpec.describe "users/show", type: :view do
 
   describe 'profile section' do
     it 'should have name and initials' do
-      should have_content('Konstantin Zhukov')
+      should have_content(@user.name)
       should have_content('KZ')
     end
 

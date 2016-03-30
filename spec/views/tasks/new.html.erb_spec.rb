@@ -4,6 +4,8 @@ require 'support/shared_examples'
 RSpec.describe "tasks/new.html.erb", type: :view do
   before do
     @task = FactoryGirl.build(:task)
+    @users = FactoryGirl.build_list(:user, 3)
+    @task.requester = @users.second
     render
   end
 
@@ -31,7 +33,11 @@ RSpec.describe "tasks/new.html.erb", type: :view do
     expect(subject).to have_select('task_type')
   end
 
-  it 'should have requester field'
-  it 'should select @user to requester field by default'
-  it 'should have owners field'
+  it 'should have requester field select @user by default' do
+    expect(subject).to have_select('task_requester_id', :selected => @users.second.name)
+  end
+
+  it 'should have owners field' do
+    expect(subject).to have_css('div.multiselect#task_owners')
+  end
 end

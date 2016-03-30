@@ -12,6 +12,7 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @task.type = :service if !@story
+    @users = @project.users
   end
 
   def create
@@ -22,6 +23,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_path
     else
+      @users = @project.users
       render :new
     end
   end

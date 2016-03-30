@@ -36,6 +36,7 @@ RSpec.describe "layouts/application", type: :view do
       expect(rendered).to have_css('.user_menu .dropdown-menu a[href="/companies"]')
     end
 
+
     describe 'with no projects created' do
       before do
         allow(view).to receive(:available_projects) { []}
@@ -101,8 +102,13 @@ RSpec.describe "layouts/application", type: :view do
         it 'should have Features link' do
           expect(rendered).to have_link('Features', href: project_features_path(@project_a.id))
         end
+
         it 'should have Actors link' do
           expect(rendered).to have_link('Actors', href: project_actors_path(@project_a.id))
+        end
+
+        it 'should have /tasks link' do
+          expect(rendered).to have_link('Tasks', href: tasks_path)
         end
       end
     end

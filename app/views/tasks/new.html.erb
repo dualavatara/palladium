@@ -5,7 +5,7 @@
     <%= select(:task, :type, [[:story], [:bug], [:service]], {}, {class: "form-control"}) %>
 
     <%= f.label :type, 'Story' %>
-    <%= collection_select(:task, :story_id, @stories, :id, :full_name, {}, {class: "form-control"}) %>
+    <%= collection_select(:task, :story_id, @stories, :id, :full_name, {prompt: true}, {class: "form-control"}) %>
 
     <%= f.label :type, 'Requester' %>
     <%= collection_select(:task, :requester_id, @users, :id, :name, {}, {class: "form-control"}) %>

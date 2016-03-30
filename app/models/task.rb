@@ -19,7 +19,7 @@ class Task
   validates :type, presence: true
   validates :state, presence: true
   validates :project, presence: true
-  validates :story, presence: true, if: :is_story?
+  validates :story, presence: {message: 'must be selected for story type tasks.'}, if: :is_story?
 
   def is_story?
     type == :story

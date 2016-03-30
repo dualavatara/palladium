@@ -3,12 +3,15 @@
 %>
     <%= f.label :type, 'Type' %>
     <%= select(:task, :type, [[:story], [:bug], [:service]], {}, {class: "form-control"}) %>
+    <%= f.error_text :type %>
 
     <%= f.label :type, 'Story' %>
     <%= collection_select(:task, :story_id, @stories, :id, :full_name, {prompt: true}, {class: "form-control"}) %>
+    <%= f.error_text :story %>
 
     <%= f.label :type, 'Requester' %>
     <%= collection_select(:task, :requester_id, @users, :id, :name, {}, {class: "form-control"}) %>
+    <%= f.error_text :requester %>
 
     <%= f.label :type, 'Owners' %>
     <div class="multiselect" id="task_owners"></div>

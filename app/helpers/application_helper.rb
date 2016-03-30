@@ -4,12 +4,18 @@ module ApplicationHelper
       html = '<div class="form-group">'
       html += self.label field, label
       html += super(field, class: "form-control", placeholder: placeholder)
+      html += error_text(field)
+      html += '</div>'
+      html.html_safe
+    end
+
+    def error_text(field)
+      html =''
       if self.object.errors.full_messages_for(field).any?
         self.object.errors.full_messages_for(field).each do |message|
           html += '<p class="text-danger"><small>' + message + '</small></p>'
         end
       end
-      html += '</div>'
       html.html_safe
     end
   end

@@ -12,4 +12,8 @@ class Project
   has_many :features
   has_many :actors
   has_many :tasks
+
+  def stories
+    Array.wrap(Story.find_by(:feature_id.in => self.feature_ids))
+  end
 end

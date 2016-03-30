@@ -6,6 +6,7 @@ RSpec.describe "tasks/new.html.erb", type: :view do
     @task = FactoryGirl.build(:task)
     @users = FactoryGirl.build_list(:user, 3)
     @task.requester = @users.second
+    @stories = FactoryGirl.build_list(:story, 3)
     render
   end
 
@@ -39,5 +40,9 @@ RSpec.describe "tasks/new.html.erb", type: :view do
 
   it 'should have owners field' do
     expect(subject).to have_css('div.multiselect#task_owners')
+  end
+
+  it 'should have story field' do
+    expect(subject).to have_select('task_story_id')
   end
 end

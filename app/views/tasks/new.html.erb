@@ -3,11 +3,19 @@
 %>
     <%= f.label :type, 'Type' %>
     <%= select(:task, :type, [[:story], [:bug], [:service]], {}, {class: "form-control"}) %>
+
+    <%= f.label :type, 'Story' %>
+    <%= collection_select(:task, :story_id, @stories, :id, :full_name, {}, {class: "form-control"}) %>
+
     <%= f.label :type, 'Requester' %>
     <%= collection_select(:task, :requester_id, @users, :id, :name, {}, {class: "form-control"}) %>
+
     <%= f.label :type, 'Owners' %>
     <div class="multiselect" id="task_owners"></div>
+
     <%= f.text_field :name, 'Name', 'Name' %>
+
     <%= f.text_field :desc, 'Description', 'Description' %>
+
     <%= f.submit "Add", class: "btn btn-default" %>
 <% end %>

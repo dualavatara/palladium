@@ -9,14 +9,20 @@ RSpec.describe "Tasks", type: :request do
     @user = create_signin()
     @user.current_project = @company.projects.first
     @user.save
-
-    visit new_task_path
+    @user.current_project.users << @user
+    @user.current_project.save
   end
 
   subject { page }
 
   describe 'new' do
+    before { visit new_task_path }
+
     it { should have_panel('new_task') }
+
+    it 'should have current user selected for requester_id' do
+      expect(page).to have_select('task_requester_id', selected: @user.name)
+    end
 
     describe 'with proper fields' do
       before do
@@ -31,6 +37,17 @@ RSpec.describe "Tasks", type: :request do
 
       it 'should redirect to tasks page' do
         expect(page).to have_current_path(tasks_path)
+      end
+
+      it 'should contain name, description, type and requester' do
+        Task.where(project_id: @user.current_project.id).each do |task|
+          within ("tr#task_#{task.id}") do
+            expect(page).to have_content(task.name)
+            expect(page).to have_content(task.desc)
+            expect(page).to have_content(task.type)
+            expect(page).to have_content(@user.name)
+          end
+        end
       end
     end
 
@@ -54,5 +71,15 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
+
+  end
+  describe 'index' do
+    before do
+      visit tasks_path
+    end
+
+    it 'should show task list' do
+      expect(page).to have_object_table(@user.current_project.tasks)
+    end
   end
 end

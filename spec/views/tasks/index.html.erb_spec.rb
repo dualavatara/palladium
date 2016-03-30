@@ -1,5 +1,21 @@
 require 'rails_helper'
+require 'support/shared_examples'
 
 RSpec.describe "tasks/index.html.erb", type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    @tasks = FactoryGirl.build_list(:task, 3)
+    @user = FactoryGirl.build(:user)
+    @tasks.first.requester = @user
+    render
+  end
+
+  subject { rendered }
+
+  it { should have_panel("tasks") }
+
+  it 'should have list of tasks' do
+    expect(rendered).to have_object_table(@tasks)
+  end
+
+  it 'should have correct rows'
 end

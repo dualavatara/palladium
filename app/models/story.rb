@@ -8,4 +8,8 @@ class Story
   belongs_to :feature
 
   validates :actor, presence: true
+
+  def full_name
+    "#{actor.name} #{name}"
+  end
 end

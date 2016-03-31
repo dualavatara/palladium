@@ -19,7 +19,7 @@
               <td><%= task.desc %></td>
               <td><%= task.type %></td>
               <td><%= task.requester.name if task.requester %></td>
-              <td><%= task.owners.join(', ') %></td>
+              <td><%= task.owners.collect { |user| user.name }.join(', ') %></td>
               <td><%= link_to 'Delete', task_path(task.id), method: :delete %></td>
           <% end %>
           </tbody>

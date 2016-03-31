@@ -24,7 +24,7 @@
                   <td><%= task.requester.name if task.requester %></td>
                   <td><%= task.owners.collect { |user| user.name }.join(', ') %></td>
                   <td>
-                    <%= task.state != :accepted ? state_button(task) : '&nbsp;'%>
+                    <%= task.state != :accepted ? state_button(task) : ' ' %>
                   </td>
                   <td><%= link_to 'Delete', task_path(task.id), method: :delete %></td>
               <% end %>

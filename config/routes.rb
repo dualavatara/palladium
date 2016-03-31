@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'tasks/new', to: 'tasks#new', as: 'new_task'
   get 'tasks', to: 'tasks#index', as: 'tasks'
   post 'tasks', to: 'tasks#create'
+  patch 'task/:id/state/:state', to: 'tasks#update_state', as: 'task_state'
 
   get 'features/index'
   get 'projects/:project_id/features', to: 'features#index', as: 'project_features'

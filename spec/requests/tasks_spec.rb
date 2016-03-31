@@ -32,7 +32,7 @@ RSpec.describe "Tasks", type: :request do
       end
 
       it 'should add task to database' do
-        expect(Task.count).to eq(1)
+        expect(Task.where( :name => 'Some name').count).to eq(1)
       end
 
       it 'should redirect to tasks page' do
@@ -40,7 +40,7 @@ RSpec.describe "Tasks", type: :request do
       end
 
       it 'should contain name, description, type and requester' do
-        Task.where(project_id: @user.current_project.id).each do |task|
+        Task.where( :name => 'Some name').each do |task|
           within ("tr#task_#{task.id}") do
             expect(page).to have_content(task.name)
             expect(page).to have_content(task.desc)
@@ -67,7 +67,7 @@ RSpec.describe "Tasks", type: :request do
       end
 
       it 'should not add task to database' do
-        expect(Task.count).to eq(0)
+        expect(Task.where( :name => '').count).to eq(0)
       end
     end
 
@@ -119,6 +119,39 @@ RSpec.describe "Tasks", type: :request do
 
     it 'should remove task from db' do
       expect(Task.where(id: @task_id).count).to eq(0)
+    end
+  end
+
+  describe 'update_state' do
+    before do
+      @task = Task.where(project_id: @user.current_project.id).all.first
+      visit tasks_path
+    end
+
+    it 'should translate task states to accepted' do
+      within ("tr#task_#{@task.id}") {click_link 'Start'}
+      expect(page).to have_link('Finish')
+      within ("tr#task_#{@task.id}") {click_link 'Finish'}
+      expect(page).to have_link('Deliver')
+      within ("tr#task_#{@task.id}") {click_link 'Deliver'}
+      expect(page).to have_link('Accept')
+      expect(page).to have_link('Reject')
+      within ("tr#task_#{@task.id}") {click_link 'Accept'}
+      expect(page).to have_css('.bg-success')
+    end
+
+    it 'should translate task states to rejected' do
+      within ("tr#task_#{@task.id}") {click_link 'Start'}
+      expect(page).to have_link('Finish')
+      within ("tr#task_#{@task.id}") {click_link 'Finish'}
+      expect(page).to have_link('Deliver')
+      within ("tr#task_#{@task.id}") {click_link 'Deliver'}
+      expect(page).to have_link('Accept')
+      expect(page).to have_link('Reject')
+      within ("tr#task_#{@task.id}") {click_link 'Reject'}
+      expect(page).to have_link('Restart')
+      within ("tr#task_#{@task.id}") {click_link 'Restart'}
+      within ("tr#task_#{@task.id}") {expect(page).to have_link('Finish')}
     end
   end
 end

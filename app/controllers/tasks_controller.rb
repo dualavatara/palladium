@@ -37,6 +37,13 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
+  def update_state
+    @task = Task.find(params[:id])
+    @task.state = params[:state]
+    @task.save
+    redirect_to tasks_path
+  end
+
   private
   def task_params
     params.require(:task).permit(:name, :desc, :type, :requester_id, :story_id, owner_ids: [])

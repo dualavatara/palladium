@@ -14,6 +14,10 @@ class Project
   has_many :tasks
 
   def stories
-    Array.wrap(Story.find_by(:feature_id.in => self.feature_ids))
+    begin
+      Array.wrap(Story.find_by(:feature_id.in => self.feature_ids))
+    rescue Mongoid::Errors::DocumentNotFound
+      []
+    end
   end
 end

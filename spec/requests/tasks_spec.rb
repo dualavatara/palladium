@@ -71,6 +71,29 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
+    describe 'with owners selected' do
+      before do
+        @other_users = FactoryGirl.create_list(:user, 3, projects: @company.projects)
+        @company.projects.each do |project|
+          project.users << @other_users
+          project.save
+        end
+        visit new_task_path
+        fill_in 'Name', with: 'Some name'
+        fill_in 'Description', with: 'Some description'
+        select @other_users.second.name, from: 'task_owner_ids'
+        select @other_users.last.name, from: 'task_owner_ids'
+        click_button 'Add'
+      end
+
+      it 'should add task to database with owners' do
+        task = Task.find_by(name: 'Some name')
+        expect(task.owners).to include(@other_users.second)
+        expect(task.owners).to include(@other_users.last)
+        # expect(Task.count).to eq(1)
+      end
+    end
+
 
   end
   describe 'index' do

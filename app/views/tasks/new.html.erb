@@ -14,7 +14,8 @@
     <%= f.error_text :requester %>
 
     <%= f.label :type, 'Owners' %>
-    <div class="multiselect" id="task_owners"></div>
+    <!--<div class="multiselect" id="task_owners"></div>-->
+    <%= collection_select(:task, :owner_ids, @users, :id, :name, {}, {class: "form-control", :multiple => true, :size => 5}) %>
 
     <%= f.text_field :name, 'Name', 'Name' %>
 

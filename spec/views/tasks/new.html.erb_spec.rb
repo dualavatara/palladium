@@ -39,7 +39,7 @@ RSpec.describe "tasks/new.html.erb", type: :view do
   end
 
   it 'should have owners field' do
-    expect(subject).to have_css('div.multiselect#task_owners')
+    expect(subject).to have_css('select#task_owner_ids[multiple][size="5"]')
   end
 
   it 'should have story field' do

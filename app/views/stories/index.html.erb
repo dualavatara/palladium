@@ -1,8 +1,9 @@
 <%
-  link = link_to 'Add', new_feature_story_path(@feature.id)
-  text = "No stories added. You can add story with 'Add' link."
+  link = link_to 'Add', new_feature_story_path(@feature.id) if @feature
+  text = "No stories added. You can add story with 'Add' link." if @feature and !@stories.any?
+  text = "All stories for project listed here. You can add stories only for features." if @project
   %>
-<%= panel('stories', "Stories", link, text) do %>
+<%= panel_with_table('stories', "Stories", link, text) do %>
     <% if @stories.any? %>
         <table class="table">
           <thead>

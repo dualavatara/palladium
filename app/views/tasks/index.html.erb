@@ -2,7 +2,7 @@
   link = link_to 'Add', new_task_path()
   text = "No tasks added. You can add task with 'Add' link."
 %>
-<%= panel('tasks', "Tasks", link, text) do %>
+<%= panel_with_table('tasks', "Tasks", link, text) do %>
     <% if @tasks.any? %>
         <table class="table">
           <thead>

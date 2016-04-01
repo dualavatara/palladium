@@ -14,6 +14,8 @@ RSpec.describe "Dashboards", type: :request do
     visit '/dashboard'
   end
 
+  let(:project) { @projects.first }
+
   it 'should have Projects header' do
     expect(page).to have_content('Projects')
   end
@@ -35,4 +37,20 @@ RSpec.describe "Dashboards", type: :request do
   it 'should have correct tasks count' do
     expect(page).to have_content("Tasks : 3")
   end
+
+  it 'should have correct features link' do
+    within("div#project_#{project.id}") { click_link 'Features'}
+    expect(page).to have_current_path(project_features_path(project.id))
+  end
+
+  it 'should have correct stories link' do
+    within("div#project_#{project.id}") { click_link 'Stories'}
+    expect(page).to have_current_path(project_stories_path(project.id))
+  end
+
+  it 'should have correct tasks link' do
+    within("div#project_#{project.id}") { click_link 'Tasks'}
+    expect(page).to have_current_path(project_tasks_path(project.id))
+  end
+
 end

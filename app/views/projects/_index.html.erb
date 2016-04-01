@@ -2,7 +2,7 @@
   text = 'This is list of projects for this company. You also can create a project via \'Add\' link.'
   add_link = link_to("Add", new_company_project_path(@company.id))
 %>
-<%= panel('projects', 'Projects', add_link, text) do %>
+<%= panel_with_table('projects', 'Projects', add_link, text) do %>
     <% if @projects.any? %>
         <table class="table">
           <thead>

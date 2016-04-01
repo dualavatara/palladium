@@ -5,9 +5,9 @@ end %>
 <%= link_to 'New project', new_project_path %>
 <% user_projects.each do |project| %>
     <% name = link_to project.name, project_path(project.id) %>
-    <%= panel "project_#{project.id}", name, '', '' do %>
-        <div id="features"><%= link_to 'Features', features_path %> : <%= features_num(project) %></div>
-        <div id="stories"><%= link_to 'Stories', stories_path %> : <%= stories_num(project) %></div>
-        <div id="tasks"><%= link_to 'Tasks', tasks_path %> : <%= tasks_num(project) %></div>
+    <%= panel "project_#{project.id}", name, '' do %>
+        <div id="features"><%= link_to 'Features', project_features_path(project.id) %> : <%= features_num(project) %></div>
+        <div id="stories"><%= link_to 'Stories', project_stories_path(project.id) %> : <%= stories_num(project) %></div>
+        <div id="tasks"><%= link_to 'Tasks', project_tasks_path(project.id) %> : <%= tasks_num(project) %></div>
     <% end %>
 <% end %>

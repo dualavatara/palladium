@@ -29,7 +29,7 @@ RSpec.describe "dashboard/index.html.erb", type: :view do
 
   describe 'project panel' do
 
-    let(:panel) { Capybara.string(rendered).find("div#project_#{@projects.second.id}") }
+    let(:panel_with_table) { Capybara.string(rendered).find("div#project_#{@projects.second.id}") }
     let(:project) { @projects.second }
 
     it 'should have name with link to project page' do
@@ -37,16 +37,16 @@ RSpec.describe "dashboard/index.html.erb", type: :view do
     end
 
     it 'should have link "Features" with number of features' do
-      expect(panel).to have_link("Features", href: features_path)
+      expect(panel).to have_link("Features", href: project_features_path(project.id))
       expect(panel.find('div#features')).to have_content('3')
     end
 
     it 'should have link "Stories" with number of stories' do
-      expect(panel).to have_link("Stories", href: stories_path)
+      expect(panel).to have_link("Stories", href: project_stories_path(project.id))
       expect(panel.find('div#stories')).to have_content('4')
     end
     it 'should have link "Tasks" with number of tasks' do
-      expect(panel).to have_link("Tasks", href: tasks_path)
+      expect(panel).to have_link("Tasks", href: project_tasks_path(project.id))
       expect(panel.find('div#tasks')).to have_content('5')
     end
   end

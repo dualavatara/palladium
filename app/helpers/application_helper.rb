@@ -29,13 +29,23 @@ module ApplicationHelper
     raw html
   end
 
-  def panel(id, title, title_link_html, text, &block)
+  def panel_with_table(id, title, title_link_html, text, &block)
     content = capture(&block)
     html = '<div class="panel panel-default" id="' + id + '">'
     html += panel_heading title, title_link_html
     html += '<div class="panel-body"><p>' + text + '</p></div>' if text
     html += content if content
     html += '</div>'
+    raw html
+  end
+
+  def panel(id, title, title_link_html, &block)
+    content = capture(&block)
+    html = '<div class="panel panel-default" id="' + id + '">'
+    html += panel_heading title, title_link_html
+    html += '<div class="panel-body">'
+    html += content if content
+    html += '</div></div>'
     raw html
   end
 

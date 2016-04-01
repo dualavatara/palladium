@@ -22,9 +22,9 @@ Rails.application.routes.draw do
   get 'tasks', to: 'tasks#index', as: 'tasks'
   post 'tasks', to: 'tasks#create'
   patch 'task/:id/state/:state', to: 'tasks#update_state', as: 'task_state'
+  get 'projects/:project_id/tasks', to: 'tasks#index', as: 'project_tasks'
 
   # features
-  get 'features', to: 'feature#index', as: 'features'
   get 'projects/:project_id/features', to: 'features#index', as: 'project_features'
   get 'projects/:project_id/features/new', to: 'features#new', as: 'new_project_feature'
   post 'projects/:project_id/features', to: 'features#create'
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   delete 'projects/:project_id/actor/:id', to: 'actors#destroy'
 
   # stories
-  get 'stories', to: 'stories#index', as: 'stories'
+  get 'projects/:project_id/stories', to: 'stories#index', as: 'project_stories'
   get 'features/:feature_id/stories', to: 'stories#index', as: 'feature_stories'
   get 'story/:id', to: 'stories#show', as: 'story'
   delete 'story/:id', to: 'stories#destroy'

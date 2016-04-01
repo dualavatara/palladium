@@ -1,7 +1,16 @@
 class StoriesController < ApplicationController
   def index
-    @feature = Feature.find(params[:feature_id])
-    @stories = @feature.stories
+    if params[:feature_id]
+      @feature = Feature.find(params[:feature_id])
+      @stories = @feature.stories
+    elsif params[:project_id]
+      @project = Project.find(params[:project_id])
+      @stories = @project.stories
+    else
+      @project = current_user.current_project
+      @stories = @project.stories
+    end
+
   end
 
   def new

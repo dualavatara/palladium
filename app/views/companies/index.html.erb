@@ -2,7 +2,7 @@
   text = 'This is list of companies you have role in. You can edit company`s profile if you have admin role in it. You also can create a company via \'Add\' link.'
   link_html = link_to 'Add', new_company_path
 %>
-<%= panel('companies_panel', 'Companies', link_html, text) do %>
+<%= panel_with_table('companies_panel', 'Companies', link_html, text) do %>
     <% if @companies.any? %>
         <table class="table">
           <thead>

@@ -57,4 +57,10 @@ module ApplicationHelper
     html += '</div>'
     raw html
   end
+
+  def title_content
+    title = content_for :title
+    title = title.blank? ? 'Palladuim' : "Palladuim::#{title}"
+    title
+  end
 end

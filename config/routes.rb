@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  root 'static_pages#home'
+
+  # get 'dashboard/index'
 
   # get 'tasks/index'
   #
@@ -9,6 +12,8 @@ Rails.application.routes.draw do
   # get 'tasks/create'
   #
   # get 'tasks/destroy'
+
+  get 'dashboard', to: 'dashboard#index', as: 'dashboard'
 
   get 'task/:id', to: 'task#show', as: 'task'
   delete 'task/:id', to: 'tasks#destroy'
@@ -56,7 +61,7 @@ Rails.application.routes.draw do
     resources :projects, shallow: true
   end
 
-  root 'static_pages#home'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

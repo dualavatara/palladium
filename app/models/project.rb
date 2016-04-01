@@ -15,7 +15,7 @@ class Project
 
   def stories
     begin
-      Array.wrap(Story.find_by(:feature_id.in => self.feature_ids))
+      Array.wrap(Story.where(:feature_id.in => self.feature_ids))
     rescue Mongoid::Errors::DocumentNotFound
       []
     end

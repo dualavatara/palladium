@@ -36,12 +36,12 @@ RSpec.describe "Users", type: :request do
         it "should silently authenticate user" do
           click_button 'signup'
           visit '/signup'
-          expect(page).to have_current_path(root_path)
+          expect(page).to have_current_path(dashboard_path)
         end
 
         it "should redirect user to root" do
           click_button 'signup'
-          expect(page).to have_current_path(root_path)
+          expect(page).to have_current_path(dashboard_path)
         end
       end
 
@@ -52,7 +52,7 @@ RSpec.describe "Users", type: :request do
         end
 
         it "should redirect to root" do
-          expect(page).to have_current_path(root_path)
+          expect(page).to have_current_path(dashboard_path)
         end
 
         it "should have no 'Sign up' and 'Sign in' links on navbar" do
@@ -116,7 +116,7 @@ RSpec.describe "Users", type: :request do
       click_button 'Set password'
       visit '/signout'
       signin(@user.email, 'testpass')
-      expect(page).to have_current_path(root_path)
+      expect(page).to have_current_path(dashboard_path)
     end
 
     it 'should show error on invalid password submit' do

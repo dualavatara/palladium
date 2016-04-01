@@ -1,5 +1,13 @@
 <% content_for :title do
   'Dashboard'
 end %>
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<h1>Projects</h1>
+<%= link_to 'New project', new_project_path %>
+<% user_projects.each do |project| %>
+    <% name = link_to project.name, project_path(project.id) %>
+    <%= panel "project_#{project.id}", name, '', '' do %>
+        <div id="features"><%= link_to 'Features', features_path %> : <%= features_num(project) %></div>
+        <div id="stories"><%= link_to 'Stories', stories_path %> : <%= stories_num(project) %></div>
+        <div id="tasks"><%= link_to 'Tasks', tasks_path %> : <%= tasks_num(project) %></div>
+    <% end %>
+<% end %>

@@ -68,13 +68,17 @@ RSpec.describe "Projects", type: :request do
     end
 
     it 'should change current project' do
-      click_link 'Second'
+      within('header') do
+        click_link 'Second'
+      end
       @user = User.find(@user.id)
       expect(@user.current_project).to eq(@project_b)
     end
 
     it 'should change header current project' do
-      click_link 'Second'
+      within('header') do
+        click_link 'Second'
+      end
       expect(page).to have_css('a.dropdown-toggle', text: @project_b.name)
     end
   end

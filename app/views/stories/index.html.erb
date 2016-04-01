@@ -2,7 +2,7 @@
   link = link_to 'Add', new_feature_story_path(@feature.id)
   text = "No stories added. You can add story with 'Add' link."
   %>
-<%= panel_with_table('stories', "Stories", link, text) do %>
+<%= panel('stories', "Stories", link, text) do %>
     <% if @stories.any? %>
         <table class="table">
           <thead>

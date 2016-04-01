@@ -29,12 +29,12 @@ module ApplicationHelper
     raw html
   end
 
-  def panel_with_table(id, title, title_link_html, text, &block)
-    table = capture(&block)
+  def panel(id, title, title_link_html, text, &block)
+    content = capture(&block)
     html = '<div class="panel panel-default" id="' + id + '">'
     html += panel_heading title, title_link_html
     html += '<div class="panel-body"><p>' + text + '</p></div>' if text
-    html += table if table
+    html += content if content
     html += '</div>'
     raw html
   end
@@ -60,7 +60,7 @@ module ApplicationHelper
 
   def title_content
     title = content_for :title
-    title = title.blank? ? 'Palladuim' : "Palladuim::#{title}"
+    title = title.blank? ? 'Palladium' : "Palladium::#{title}"
     title
   end
 end

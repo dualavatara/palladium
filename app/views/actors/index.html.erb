@@ -3,7 +3,7 @@
   text = "No actors added. You can add feature with 'Add' link." if @actors.empty?
 %>
 
-<%= panel_with_table('actors', 'Actors', add_link, text) do %>
+<%= panel('actors', 'Actors', add_link, text) do %>
     <% if @actors.any? %>
         <table class="table">
           <thead>

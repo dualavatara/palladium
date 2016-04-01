@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   get 'dashboard', to: 'dashboard#index', as: 'dashboard'
 
+  #tasks
   get 'task/:id', to: 'task#show', as: 'task'
   delete 'task/:id', to: 'tasks#destroy'
   get 'tasks/new', to: 'tasks#new', as: 'new_task'
@@ -22,31 +23,42 @@ Rails.application.routes.draw do
   post 'tasks', to: 'tasks#create'
   patch 'task/:id/state/:state', to: 'tasks#update_state', as: 'task_state'
 
-  get 'features/index'
+  # features
+  get 'features', to: 'feature#index', as: 'features'
   get 'projects/:project_id/features', to: 'features#index', as: 'project_features'
   get 'projects/:project_id/features/new', to: 'features#new', as: 'new_project_feature'
   post 'projects/:project_id/features', to: 'features#create'
   get 'projects/:project_id/feature/:id', to: 'features#show', as: 'project_feature'
   delete 'projects/:project_id/feature/:id', to: 'features#destroy'
 
+  # actors
   get 'projects/:project_id/actors', to: 'actors#index', as: 'project_actors'
   get 'projects/:project_id/actors/new', to: 'actors#new', as: 'new_project_actor'
   post 'projects/:project_id/actors', to: 'actors#create'
   get 'projects/:project_id/actor/:id', to: 'actors#show', as: 'project_actor'
   delete 'projects/:project_id/actor/:id', to: 'actors#destroy'
 
+  # stories
+  get 'stories', to: 'stories#index', as: 'stories'
   get 'features/:feature_id/stories', to: 'stories#index', as: 'feature_stories'
   get 'story/:id', to: 'stories#show', as: 'story'
   delete 'story/:id', to: 'stories#destroy'
   get 'features/:feature_id/stories/new', to: 'stories#new', as: 'new_feature_story'
   post 'features/:feature_id/stories', to: 'stories#create'
 
+  # static
   get 'static_pages/home'
   get 'static_pages/help'
+
+  # users
   get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
-  get 'current_project/:project_id', to: 'users#set_current_project', as: 'set_current_project'
   patch 'profile', to: 'users#update_profile', as: 'update_profile'
   patch 'password', to: 'users#update_password', as: 'update_password'
+
+  # project
+  get 'project/new', to: 'projects#new', as: 'new_project'
+  # current project
+  get 'current_project/:project_id', to: 'users#set_current_project', as: 'set_current_project'
 
   match 'signup', to: 'users#new', via: :get
   match 'signin', to: 'authentications#new', via: [:get, :post]

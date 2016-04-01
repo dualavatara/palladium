@@ -16,7 +16,7 @@ RSpec.describe "Authentications", type: :request do
     describe "successful" do
       it 'should redirect to root_path' do
         signin(@user.email, @user.password)
-        expect(page).to have_current_path(root_path)
+        expect(page).to have_current_path(dashboard_path)
       end
     end
 

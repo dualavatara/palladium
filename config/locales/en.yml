@@ -21,3 +21,8 @@
 
 en:
   hello: "Hello world"
+  helpers:
+    submit:
+      actor:
+        create: "Add"
+        update: "Save"

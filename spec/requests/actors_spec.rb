@@ -50,10 +50,69 @@ RSpec.describe "Actors", type: :request do
     end
   end
 
+  describe 'edit' do
+    before do
+      @actor = @project.actors.first
+      visit edit_actor_path(@actor.id)
+    end
+
+    it 'should have edit_actor form' do
+      expect(page).to have_css("form#edit_actor_#{@actor.id}")
+    end
+  end
+
+  describe 'update' do
+    before do
+      @actor = @project.actors.first
+      visit edit_actor_path(@actor.id)
+    end
+
+    describe 'with valid fields' do
+      before do
+        fill_in 'Name', with: 'Edited name'
+        fill_in 'Description', with: 'Edited description'
+        click_button 'Save'
+      end
+
+      it 'should edit object in db' do
+        @obj = Actor.find(@actor.id)
+        expect(@obj.name).to eq('Edited name')
+        expect(@obj.desc).to eq('Edited description')
+      end
+
+      it 'should redirect to project actors' do
+        expect(page).to have_current_path(project_actors_path(@project.id))
+      end
+    end
+
+    describe 'with invalid fields' do
+      before do
+        fill_in 'Name', with: ''
+        fill_in 'Description', with: ''
+        click_button 'Save'
+      end
+
+      it 'should not edit object in db' do
+        @obj = Actor.find(@actor.id)
+        expect(@obj.name).to eq(@actor.name)
+        expect(@obj.desc).to eq(@actor.desc)
+      end
+
+      it 'should have edit form' do
+        expect(page).to have_css("form#edit_actor_#{@actor.id}")
+      end
+
+      it 'should have errors for invalid fields' do
+        expect(page).to have_css('.text-danger')
+      end
+    end
+
+
+  end
+
   describe 'destroy' do
     before do
       visit project_actors_path(@project.id)
-      @actor = @project.actors.first
       within("tr#actor_#{@actor.id}") do
         click_link 'Delete'
       end

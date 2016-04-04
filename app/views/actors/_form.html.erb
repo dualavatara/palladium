@@ -1,5 +1,6 @@
-<%= panel_with_form_for(@actor, dom_id(@actor), panel_name, url: project_actors_path(@project.id)) do |f| %>
+<%= panel_with_form_for(@actor, dom_id(@actor), panel_name, url: actor_path) do |f| %>
+    <%= f.hidden_field :project_id %>
     <%= f.text_field :name, 'Name', 'Name' %>
     <%= f.text_field :desc, 'Description', 'Description' %>
-    <%= f.submit "Add", class: "btn btn-default" %>
+    <%= f.submit class: "btn btn-default" %>
 <% end %>

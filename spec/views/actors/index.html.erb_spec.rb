@@ -26,4 +26,10 @@ RSpec.describe "actors/index.html.erb", type: :view do
       expect(rendered).to have_link('Delete', href: actor_path(actor.id))
     end
   end
+
+  it 'should have Edit link for objects' do
+    @actors.each do |actor|
+      expect(rendered).to have_link('Edit', href: edit_actor_path(actor.id))
+    end
+  end
 end

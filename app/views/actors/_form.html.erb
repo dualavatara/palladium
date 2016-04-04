@@ -1,0 +1,5 @@
+<%= panel_with_form_for(@actor, dom_id(@actor), panel_name, url: project_actors_path(@project.id)) do |f| %>
+    <%= f.text_field :name, 'Name', 'Name' %>
+    <%= f.text_field :desc, 'Description', 'Description' %>
+    <%= f.submit "Add", class: "btn btn-default" %>
+<% end %>

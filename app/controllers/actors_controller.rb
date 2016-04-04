@@ -22,6 +22,10 @@ class ActorsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
   def destroy
     @actor = Actor.find(params[:id])
     @actor.destroy

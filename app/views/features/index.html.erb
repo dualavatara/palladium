@@ -14,7 +14,7 @@
   <%= content_tag_for(:tr, @features) do |feature|%>
         <td><%= link_to feature.name, feature_stories_path(feature.id) %></td>
         <td><%= feature.desc %></td>
-        <td><%= link_to 'Delete', project_feature_path(@project.id, feature.id),
+        <td><%= link_to 'Delete', feature_path(feature.id),
                         method: :delete, data: {confirm: 'Deleting feature is permanent action. Are you sure?'} %></td>
   <% end %>
   </tbody>

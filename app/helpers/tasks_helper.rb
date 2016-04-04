@@ -42,12 +42,12 @@ module TasksHelper
     if params[object.state].is_a?(Array)
       params[object.state].collect do |btn|
         link_to btn[:name],
-                task_state_path(object.id, btn[:next_state]),
+                state_task_path(object.id, :state => btn[:next_state]),
                 method: :patch, class: "btn #{btn[:css_class]} btn-xs"
       end.join("").html_safe
     else
       link_to params[object.state][:name],
-              task_state_path(object.id, params[object.state][:next_state]),
+              state_task_path(object.id, :state => params[object.state][:next_state]),
               method: :patch, class: "btn #{params[object.state][:css_class]} btn-xs"
     end
 

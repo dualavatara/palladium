@@ -15,7 +15,7 @@
           <%= content_tag_for(:tr, @actors) do |actor| %>
               <td><%= actor.name %></td>
               <td><%= actor.desc %></td>
-              <td><%= link_to 'Delete', project_actor_path(@project.id, actor.id),
+              <td><%= link_to 'Delete', actor_path(actor.id),
                               method: :delete, data: {confirm: 'Deleting actor is permanent action. Are you sure?'} %></td>
           <% end %>
           </tbody>

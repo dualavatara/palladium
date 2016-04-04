@@ -1,78 +1,51 @@
 Rails.application.routes.draw do
   root 'static_pages#home'
 
-  # get 'dashboard/index'
-
-  # get 'tasks/index'
-  #
-  # get 'tasks/show'
-  #
-  # get 'tasks/new'
-  #
-  # get 'tasks/create'
-  #
-  # get 'tasks/destroy'
-
-  get 'dashboard', to: 'dashboard#index', as: 'dashboard'
-
-  #tasks
-  get 'task/:id', to: 'task#show', as: 'task'
-  delete 'task/:id', to: 'tasks#destroy'
-  get 'tasks/new', to: 'tasks#new', as: 'new_task'
-  get 'tasks', to: 'tasks#index', as: 'tasks'
-  post 'tasks', to: 'tasks#create'
-  patch 'task/:id/state/:state', to: 'tasks#update_state', as: 'task_state'
-  get 'projects/:project_id/tasks', to: 'tasks#index', as: 'project_tasks'
-
-  # features
-  get 'projects/:project_id/features', to: 'features#index', as: 'project_features'
-  get 'projects/:project_id/features/new', to: 'features#new', as: 'new_project_feature'
-  post 'projects/:project_id/features', to: 'features#create'
-  get 'projects/:project_id/feature/:id', to: 'features#show', as: 'project_feature'
-  delete 'projects/:project_id/feature/:id', to: 'features#destroy'
-
-  # actors
-  get 'projects/:project_id/actors', to: 'actors#index', as: 'project_actors'
-  get 'projects/:project_id/actors/new', to: 'actors#new', as: 'new_project_actor'
-  post 'projects/:project_id/actors', to: 'actors#create'
-  get 'projects/:project_id/actor/:id', to: 'actors#show', as: 'project_actor'
-  delete 'projects/:project_id/actor/:id', to: 'actors#destroy'
-
-  # stories
-  get 'projects/:project_id/stories', to: 'stories#index', as: 'project_stories'
-  get 'features/:feature_id/stories', to: 'stories#index', as: 'feature_stories'
-  get 'story/:id', to: 'stories#show', as: 'story'
-  delete 'story/:id', to: 'stories#destroy'
-  get 'features/:feature_id/stories/new', to: 'stories#new', as: 'new_feature_story'
-  post 'features/:feature_id/stories', to: 'stories#create'
-
   # static
   get 'static_pages/home'
   get 'static_pages/help'
 
-  # users
-  get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
-  patch 'profile', to: 'users#update_profile', as: 'update_profile'
-  patch 'password', to: 'users#update_password', as: 'update_password'
-
-  # project
-  get 'project/new', to: 'projects#new', as: 'new_project'
-  # current project
-  get 'current_project/:project_id', to: 'users#set_current_project', as: 'set_current_project'
-
-  match 'signup', to: 'users#new', via: :get
-  match 'signin', to: 'authentications#new', via: [:get, :post]
-  match 'signout', to: 'authentications#destroy', via: [:get]
-  match 'profile', to: 'users#show', via: :get
-
-  resources :authentications, only: [:new, :create, :destroy]
-  resources :users
+  get 'dashboard', to: 'dashboard#index', as: 'dashboard'
 
   resources :companies do
     resources :roles
     resources :projects, shallow: true
   end
 
+  #tasks
+  resources :tasks, only: [:show, :destroy, :new, :index, :create] do
+    member do
+      get 'state', action: :show_state
+      patch 'state', action: :update_state
+    end
+
+  end
+
+  resources :projects do
+    patch 'current', to: 'users#current_project', on: :member
+    resources :features, shallow: true
+    resources :actors, shallow: true
+    resources :stories, shallow: true
+    resources :tasks, only: [:index], shallow: true
+  end
+
+  resources :features do
+    resources :stories, shallow: true
+  end
+
+  resources :authentications, only: [:new, :create, :destroy]
+
+  resource :user, path_names: { new: 'signup'}
+
+  # users
+  get 'profile/edit', to: 'users#edit_profile', as: 'edit_profile'
+  patch 'profile', to: 'users#update_profile', as: 'update_profile'
+  patch 'password', to: 'users#update_password', as: 'update_password'
+
+  get 'signup', to: 'users#new'
+  get 'signin', to: 'authentications#new'
+  get 'signout', to: 'authentications#destroy'
+  get 'profile', to: 'users#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -23,7 +23,7 @@ RSpec.describe "actors/index.html.erb", type: :view do
 
   it 'should have Delete link for objects' do
     @actors.each do |actor|
-      expect(rendered).to have_link('Delete', href: project_actor_path(@project.id, actor.id))
+      expect(rendered).to have_link('Delete', href: actor_path(actor.id))
     end
   end
 end

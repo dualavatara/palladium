@@ -51,6 +51,8 @@ class ProjectsController < ApplicationController
     redirect_to companies_path unless @company.admin?(@user)
   end
 
+
+
   private
 
   def project_params

@@ -80,7 +80,7 @@ RSpec.describe "layouts/application", type: :view do
         end
 
         it 'should have link to remote change current project' do
-          expect(rendered).to have_link(@project_b.name, href: set_current_project_path(@project_b.id))
+          expect(rendered).to have_link(@project_b.name, href: current_project_path(@project_b.id))
         end
       end
 

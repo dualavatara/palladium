@@ -104,10 +104,10 @@ class UsersController < ApplicationController
     # end
   end
 
-  # GET current_project/1
-  def set_current_project
+  # PATCH
+  def current_project
     respond_to do |format|
-      if @user.current_project = @user.projects.find(params[:project_id])
+      if @user.current_project = @user.projects.find(params[:id])
         @user.save
         format.html { redirect_to project_path(@user.current_project) }
         format.js { render 'layouts/current_project' }

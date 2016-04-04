@@ -1,7 +1,7 @@
 class ActorsController < ApplicationController
   include ProjectsHelper
 
-  before_action :find_project, only: [:index, :new, :create, :destroy]
+  before_action :find_project, only: [:index, :new, :create]
 
   def index
     @actors = @project.actors
@@ -25,7 +25,7 @@ class ActorsController < ApplicationController
   def destroy
     @actor = Actor.find(params[:id])
     @actor.destroy
-    redirect_to project_actors_path(@project.id)
+    redirect_to :back
   end
 
   private

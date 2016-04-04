@@ -1,15 +1,15 @@
 class FeaturesController < ApplicationController
   include ProjectsHelper
 
-  before_action :find_project, only: [:index, :new, :create, :destroy]
+  before_action :find_project, only: [:index, :new, :create]
 
   def index
-
     @features = @project.features
   end
 
   def new
     @feature = Feature.new
+    @feature.project = @project
   end
 
   def show
@@ -31,7 +31,7 @@ class FeaturesController < ApplicationController
   def destroy
     @feature = Feature.find(params[:id])
     @feature.destroy
-    redirect_to project_features_path(@project.id)
+    redirect_to :back
   end
 
   private

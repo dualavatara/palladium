@@ -1,5 +1,5 @@
 <div class="center-block small-form">
-    <%= form_for(@user) do |f| %>
+    <%= form_for(@user, url: user_path) do |f| %>
       <div class="form-group">
         <%= f.label :name, 'Name' %>
         <%= f.text_field :name, class: "form-control", placeholder: 'Name' %>

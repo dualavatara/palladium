@@ -44,23 +44,23 @@ RSpec.describe "tasks/index.html.erb", type: :view do
 
   describe 'task states' do
     it 'shows btn-default class "Start" button on unsarted tasks' do
-      expect(row(@tasks[0])).to have_state_btn('btn-default','Start', task_state_path(@tasks[0].id, :started))
+      expect(row(@tasks[0])).to have_state_btn('btn-default','Start', state_task_path(@tasks[0].id, :state => :started))
     end
 
     it 'shows btn-primary class "Finish" button on sarted tasks' do
-      expect(row(@tasks[1])).to have_state_btn('btn-primary','Finish', task_state_path(@tasks[1].id, :finished))
+      expect(row(@tasks[1])).to have_state_btn('btn-primary','Finish', state_task_path(@tasks[1].id, :state => :finished))
     end
 
     it 'shows btn-warning class "Deliver" button on finished tasks' do
-      expect(row(@tasks[2])).to have_state_btn('btn-warning','Deliver', task_state_path(@tasks[2].id, :delivered))
+      expect(row(@tasks[2])).to have_state_btn('btn-warning','Deliver', state_task_path(@tasks[2].id, :state => :delivered))
     end
 
     it 'shows btn-success class "Accept" button on delivered tasks' do
-      expect(row(@tasks[3])).to have_state_btn('btn-success','Accept', task_state_path(@tasks[3].id, :accepted))
+      expect(row(@tasks[3])).to have_state_btn('btn-success','Accept', state_task_path(@tasks[3].id, :state => :accepted))
     end
 
     it 'shows btn-danger class "Reject" button on delivered tasks' do
-      expect(row(@tasks[3])).to have_state_btn('btn-danger','Reject', task_state_path(@tasks[3].id, :rejected))
+      expect(row(@tasks[3])).to have_state_btn('btn-danger','Reject', state_task_path(@tasks[3].id, :state => :rejected))
     end
 
     it 'has bg-success class row for accepted tasks' do
@@ -70,7 +70,7 @@ RSpec.describe "tasks/index.html.erb", type: :view do
     end
 
     it 'shows btn-default class "Restart" button on rejected tasks' do
-      expect(row(@tasks[5])).to have_state_btn('btn-default','Restart', task_state_path(@tasks[5].id, :started))
+      expect(row(@tasks[5])).to have_state_btn('btn-default','Restart', state_task_path(@tasks[5].id, :state => :started))
     end
   end
 

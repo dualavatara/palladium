@@ -57,31 +57,7 @@ RSpec.describe "Projects", type: :request do
     end
   end
 
-  describe 'current_project' do
-    before do
-      @project_a = FactoryGirl.create(:project, company: @company, name: 'First')
-      @project_b = FactoryGirl.create(:project, company: @company, name: 'Second')
-      @user.projects = [@project_a, @project_b]
-      @user.current_project = @project_a
-      @user.save
-      visit '/'
-    end
 
-    it 'should change current project' do
-      within('header') do
-        click_link 'Second'
-      end
-      @user = User.find(@user.id)
-      expect(@user.current_project).to eq(@project_b)
-    end
-
-    it 'should change header current project' do
-      within('header') do
-        click_link 'Second'
-      end
-      expect(page).to have_css('a.dropdown-toggle', text: @project_b.name)
-    end
-  end
 
   describe 'delete' do
     before do

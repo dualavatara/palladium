@@ -17,7 +17,7 @@ RSpec.describe "features/index.html.erb", type: :view do
   end
 
   it 'should have Delete link' do
-    expect(render).to have_link('Delete', href: project_feature_path(@project.id, @features.first.id))
+    expect(render).to have_link('Delete', href: feature_path(@features.first.id))
   end
 
   it 'should have link to stories from name' do

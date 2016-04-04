@@ -41,6 +41,7 @@ RSpec.describe "Features", type: :request do
         expect(page).to have_css('.field_with_errors')
       end
     end
+
     describe 'destroy' do
       before do
         visit project_features_path(@project.id)

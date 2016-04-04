@@ -7,7 +7,7 @@
       <ul class="dropdown-menu" aria-labelledby="drop1">
         <% (available_projects - [current_project]).each do |project| %>
             <li id="project_<%= project.id %>">
-              <%= link_to project.name, set_current_project_path(project.id), remote: true %>
+              <%= link_to project.name, current_project_path(project.id), method: :patch, remote: true %>
             </li>
         <% end %>
       </ul>

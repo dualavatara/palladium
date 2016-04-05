@@ -4,5 +4,5 @@ class Actor
   include Mongoid::Paranoia
   include NamedAndDescribed
 
-  belongs_to :project
+  belongs_to :project, dependent: :restrict
 end

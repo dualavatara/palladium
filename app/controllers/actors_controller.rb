@@ -9,6 +9,7 @@ class ActorsController < ApplicationController
 
   def new
     @actor = Actor.new
+    @actor.project = @project
   end
 
   def create

@@ -18,6 +18,45 @@ module ApplicationHelper
       end
       html.html_safe
     end
+
+    def search_select(method, objects, objects_method)
+      object_name = model_name_from_record_or_class(@object).param_key
+      fk_method = @object.send(method).foreign_key
+      id = "#{object_name}_#{method}"
+
+      # <li class="dropdown" id="current_project" data-child-maxwidth="true">
+      @template.content_tag :div, class: "dropdown search-select", id: "#{object_name}_#{method}" do
+
+        html = @template.content_tag :div, data: {'same-width' => "dropdown-menu-#{id}", :toggle => "dropdown"} do
+          search_field(object_name, fk_method)
+        end
+
+        # filter objects from already added objects
+        ids = @object.send(fk_method)
+        filtered_objects = objects.select { |obj| !ids.include?(obj.id()) }
+
+        html += search_dropdown(filtered_objects, objects_method, "dropdown-menu-#{id}")
+      end.html_safe
+    end
+
+    private
+
+    def search_field(object_name, fk_method)
+      html = @template.hidden_field(object_name, fk_method)
+      html += @template.text_field_tag(:search_val, nil, class: '')
+      html += @template.content_tag :span, '', class: 'caret'
+      html.html_safe
+    end
+
+    def search_dropdown(objects, method, id)
+
+      @template.content_tag :ul, class: 'dropdown-menu', id: id do
+        objects.map do |obj|
+          text = @template.content_tag :a, obj.send(method), href: '#'
+          @template.content_tag :li, text, data: {id: obj.id().to_s}
+        end.join('').html_safe
+      end
+    end
   end
 
 

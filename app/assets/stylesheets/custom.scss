@@ -18,3 +18,21 @@
     margin-top: 8px;
   }
 }
+
+div.search-select {
+  input {
+    @extend .form-control;
+    float: left;
+    margin-right: -16px;
+    width: 100%;
+    padding-right: 16px;
+  }
+  .caret {
+    margin-top: 14px;
+  }
+  .dropdown-menu {
+    top: 85%;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+}

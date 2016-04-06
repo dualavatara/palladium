@@ -18,7 +18,6 @@ Rails.application.routes.draw do
       get 'state', action: :show_state
       patch 'state', action: :update_state
     end
-
   end
 
   resources :projects do
@@ -28,6 +27,8 @@ Rails.application.routes.draw do
     resources :stories, shallow: true
     resources :tasks, only: [:index], shallow: true
   end
+
+  get 'projects/:project_id/users_search', to: 'projects#users_search', as: 'project_users_search'
 
   resources :features do
     resources :stories, shallow: true

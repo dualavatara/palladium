@@ -1,5 +1,5 @@
 module ApplicationHelper
-  class ApplicationFromBuilder < ActionView::Helpers::FormBuilder
+  class ApplicationFormBuilder < ActionView::Helpers::FormBuilder
     def text_field(field, label, placeholder='')
       html = '<div class="form-group">'
       html += self.label field, label
@@ -19,13 +19,16 @@ module ApplicationHelper
       html.html_safe
     end
 
-    def search_select(method, objects, objects_method)
+    def search_select(method, objects, objects_method, url)
       object_name = model_name_from_record_or_class(@object).param_key
       fk_method = @object.send(method).foreign_key
       id = "#{object_name}_#{method}"
 
       # <li class="dropdown" id="current_project" data-child-maxwidth="true">
-      @template.content_tag :div, class: "dropdown search-select", id: "#{object_name}_#{method}" do
+      @template.content_tag :div,
+                            class: "dropdown search-select clearfix",
+                            id: "#{object_name}_#{method}",
+                            data: {'search-path' => url} do
 
         html = @template.content_tag :div, data: {'same-width' => "dropdown-menu-#{id}", :toggle => "dropdown"} do
           search_field(object_name, fk_method)
@@ -44,7 +47,7 @@ module ApplicationHelper
     def search_field(object_name, fk_method)
       html = @template.hidden_field(object_name, fk_method)
       html += @template.text_field_tag(:search_val, nil, class: '')
-      html += @template.content_tag :span, '', class: 'caret'
+      html += @template.content_tag(:span, '', class: 'caret')
       html.html_safe
     end
 
@@ -95,7 +98,7 @@ module ApplicationHelper
   # @param [Hash] options for form_for
   # @yield
   def panel_with_form_for(object, id, title, options={}, &block)
-    options[:builder] = ApplicationFromBuilder
+    options[:builder] = ApplicationFormBuilder
     html = '<div class="panel panel-default" id="' + id + '">'
     html += panel_heading title, ''
     html += '<div class="panel-body">'

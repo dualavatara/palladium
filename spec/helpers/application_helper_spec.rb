@@ -21,7 +21,7 @@ RSpec.describe ApplicationHelper, type: :helper do
     describe 'search_select' do
       before do
         @users = [] + @task.owners + FactoryGirl.build_list(:user, 3)
-        @html = fields_for(@task, nil, {builder: ApplicationHelper::ApplicationFromBuilder}) do |f|
+        @html = fields_for(@task, nil, {builder: ApplicationHelper::ApplicationFormBuilder}) do |f|
           f.search_select :owners, @users, :name
         end
         p @html

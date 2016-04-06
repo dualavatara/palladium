@@ -10,5 +10,8 @@
 
 
 $(document).on "page:change", @resize_children_max
+$(document).on "page:change", ->
+  $(".search-select #search_val").on 'input', (event) ->
+    alert $(event.target).val()
 
 

@@ -1,0 +1,7 @@
+<%=
+  panel_with_form_for(@task, 'edit_task', 'Edit task', url: task_path) do |f|
+%>
+    <%= render partial: 'form', locals: { builder: f }%>
+
+    <%= f.submit "Edit", class: "btn btn-default" %>
+<% end %>

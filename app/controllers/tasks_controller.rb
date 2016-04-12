@@ -1,8 +1,8 @@
 class TasksController < ApplicationController
   include ProjectsHelper
 
-  before_action :find_project, only: [:index, :new, :create, :destroy]
-
+  before_action :find_project, only: [:index, :new, :edit, :create, :update, :destroy]
+  before_action :init_references, only: [:new, :edit, :create, :update]
   def index
     @tasks = @project.tasks
   end
@@ -12,10 +12,12 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @task.type = :service if !@story
-    @users = @project.users
+    @task.type = :service
     @task.requester ||= current_user
-    @stories = @project.stories
+  end
+
+  def edit
+    @task = Task.find(params[:id])
   end
 
   def create
@@ -25,9 +27,16 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_path
     else
-      @users = @project.users
-      @stories = @project.stories
       render :new
+    end
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    if @task.update(task_params)
+      redirect_to tasks_path
+    else
+      render :edit
     end
   end
 
@@ -42,6 +51,11 @@ class TasksController < ApplicationController
     @task.state = params[:state]
     @task.save
     redirect_to tasks_path
+  end
+
+  def init_references
+    @users = @project.users
+    @stories = @project.stories
   end
 
   private

@@ -20,7 +20,7 @@ class Task
   validates :state, presence: true, inclusion: { in: [:unstarted, :started, :finished, :delivered, :accepted, :rejected] }
   validates :project, presence: true
   validates :story, presence: {message: 'must be selected for story type tasks.'}, if: :is_story?
-
+  validates :requester, presence: true
 
   def is_story?
     type == :story

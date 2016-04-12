@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   include CompaniesHelper
   before_action :current_user
-  before_action :demand_admin, except: [:show]
+  before_action :demand_admin, except: [:show, :users_search]
 
   def index
   end
@@ -52,6 +52,13 @@ class ProjectsController < ApplicationController
   end
 
 
+  def users_search
+    # @users = User.where(:name => Regexp.new(params[:val]), :project_ids.all =>[params[:project_id]])
+    @users = User.all()
+    respond_to do |format|
+      format.json { render :users_search}
+    end
+  end
 
   private
 

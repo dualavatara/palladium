@@ -20,18 +20,38 @@
 }
 
 div.search-select {
-  input {
-    @extend .form-control;
+  .selected-items {
     float: left;
-    margin-right: -16px;
-    width: 100%;
-    padding-right: 16px;
+    div {
+      float: left;
+      margin-right: 5px;
+      a {
+        color: white;
+      }
+    }
   }
-  .caret {
-    margin-top: 14px;
+  .select-input-group {
+    height: 100%;
+    overflow: hidden;
+
+    .select-input {
+      float: left;
+      width: calc(100% - 20px);
+    }
+    input#search_val {
+      border: none;
+      outline: none;
+      width: 100%;
+    }
+    .caret {
+      float: right;
+      margin-top: 10px;
+    }
   }
+
   .dropdown-menu {
-    top: 85%;
+    top: 90%;
+    left: -1px;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
   }

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   #tasks
-  resources :tasks, only: [:show, :destroy, :new, :index, :create] do
+  resources :tasks, only: [:show, :destroy, :edit, :update, :new, :index, :create] do
     member do
       get 'state', action: :show_state
       patch 'state', action: :update_state

@@ -1,0 +1,18 @@
+<%= builder.label :type, 'Type' %>
+<%= select(:task, :type, [[:story], [:bug], [:service]], {}, {class: "form-control"}) %>
+<%= builder.error_text :type %>
+
+<%= builder.label :type, 'Story' %>
+<%= collection_select(:task, :story_id, @stories, :id, :full_name, {prompt: true}, {class: "form-control"}) %>
+<%= builder.error_text :story %>
+
+<%= builder.label :type, 'Requester' %>
+<%= builder.search_select(:requester, :name, project_users_search_path(@project), :multiple => false) %>
+<%= builder.error_text :requester %>
+
+<%= builder.label :type, 'Owners' %>
+<%= builder.search_select(:owners, :name, project_users_search_path(@project), :multiple => true) %>
+
+<%= builder.text_field :name, 'Name', 'Name' %>
+
+<%= builder.text_field :desc, 'Description', 'Description' %>

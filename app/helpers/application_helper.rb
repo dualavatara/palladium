@@ -19,46 +19,63 @@ module ApplicationHelper
       html.html_safe
     end
 
-    def search_select(method, objects, objects_method, url)
-      object_name = model_name_from_record_or_class(@object).param_key
-      fk_method = @object.send(method).foreign_key
+    def search_select(method, objects_name_method, url, options={})
       id = "#{object_name}_#{method}"
+      fk_method = @object.reflect_on_association(method).foreign_key
+      data = {
+          'search-path' => url,
+          'same-width' => "dropdown-menu-#{id}",
+          'id' => "#{@object_name}_#{fk_method}",
+          'name' => "#{@object_name}[#{fk_method}]"
+      }
+      data[:multiple] = true if options[:multiple]
 
-      # <li class="dropdown" id="current_project" data-child-maxwidth="true">
+
       @template.content_tag :div,
-                            class: "dropdown search-select clearfix",
+                            class: "form-control dropdown search-select clearfix",
                             id: "#{object_name}_#{method}",
-                            data: {'search-path' => url} do
+                            data: data do
 
-        html = @template.content_tag :div, data: {'same-width' => "dropdown-menu-#{id}", :toggle => "dropdown"} do
-          search_field(object_name, fk_method)
-        end
-
-        # filter objects from already added objects
-        ids = @object.send(fk_method)
-        filtered_objects = objects.select { |obj| !ids.include?(obj.id()) }
-
-        html += search_dropdown(filtered_objects, objects_method, "dropdown-menu-#{id}")
+        html = search_select_selected(@object.send(method), objects_name_method, fk_method, options)
+        html += search_select_input_group(method)
+        html += search_select_dropdown_menu(id)
+        html
       end.html_safe
     end
 
     private
 
-    def search_field(object_name, fk_method)
-      html = @template.hidden_field(object_name, fk_method)
-      html += @template.text_field_tag(:search_val, nil, class: '')
-      html += @template.content_tag(:span, '', class: 'caret')
-      html.html_safe
+    def search_select_selected(items, name_method, fk_method, options={})
+      @template.content_tag :div, class: "selected-items" do
+        html = options[:multiple] ? hidden_field(fk_method, :multiple => true, :value => '') : hidden_field(fk_method, :value => '')
+        Array.wrap(items).each do |item|
+          html += @template.content_tag :div, class: "btn btn-primary btn-xs", data: { id: item.id().to_s} do
+            hidden_options = {:value => item.id}
+            hidden_options[:multiple] = true if options[:multiple]
+            item_html = hidden_field fk_method, hidden_options
+            item_html += item.send(name_method)
+            item_html += @template.content_tag :a, href: '#' do
+              @template.content_tag :span, '', class: "glyphicon glyphicon-remove"
+            end
+            item_html.html_safe
+          end
+        end
+        html.html_safe
+      end
     end
 
-    def search_dropdown(objects, method, id)
-
-      @template.content_tag :ul, class: 'dropdown-menu', id: id do
-        objects.map do |obj|
-          text = @template.content_tag :a, obj.send(method), href: '#'
-          @template.content_tag :li, text, data: {id: obj.id().to_s}
-        end.join('').html_safe
+    def search_select_input_group(method)
+      @template.content_tag :div, class: 'select-input-group', data: {'toggle' => "dropdown"} do
+        html = @template.content_tag :div, class: 'select-input' do
+          @template.text_field_tag(:search_val, nil, class: '')
+        end
+        html += @template.content_tag(:span, '', class: 'caret')
+        html.html_safe
       end
+    end
+
+    def search_select_dropdown_menu(id)
+      @template.content_tag :ul, '', class: 'dropdown-menu', id: "dropdown-menu-#{id}"
     end
   end
 

@@ -26,7 +26,10 @@
                   <td>
                     <%= task.state != :accepted ? state_button(task) : ' ' %>
                   </td>
-                  <td><%= link_to 'Delete', task_path(task.id), method: :delete %></td>
+                  <td>
+                    <%= link_to 'Edit', edit_task_path(task.id) %>
+                    <%= link_to 'Delete', task_path(task.id), method: :delete %>
+                  </td>
               <% end %>
           <% end %>
           </tbody>

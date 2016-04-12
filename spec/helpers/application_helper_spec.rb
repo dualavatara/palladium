@@ -22,7 +22,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       before do
         @users = [] + @task.owners + FactoryGirl.build_list(:user, 3)
         @html = fields_for(@task, nil, {builder: ApplicationHelper::ApplicationFormBuilder}) do |f|
-          f.search_select :owners, @users, :name
+          f.search_select :owners, @users, :name, project_users_search_path('123')
         end
         p @html
       end
@@ -39,6 +39,7 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
       it 'should have collapsed list of found items' do
         expect(subject).to have_css('ul.dropdown-menu')
+        expect(subject.find('ul.dropdown-menu')).to have_css('li', count: 3)
       end
       it 'should have hidden field for selected ids' do
         expect(subject).to have_css("input#task_owner_ids[type=hidden]")
